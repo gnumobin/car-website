@@ -1,15 +1,17 @@
 .section-cta {
     width: 80%;
     margin: auto;
-}
-.head-box {
-    margin-bottom: 5rem;
 
-    &__description {
-        font-size: 1.6rem;
-        margin-top: 1rem;
+    &__head-box {
+        margin-bottom: 5rem;
+
+        > p {
+            font-size: 1.6rem;
+            margin-top: 1rem;
+        }
     }
 }
+
 .cta-form {
     font-size: 1.8rem;
     padding: 5rem;

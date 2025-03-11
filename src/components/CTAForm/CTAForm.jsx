@@ -2,7 +2,7 @@ import "./CTAForm.scss";
 
 const CTAForm = _ => {
   return <section className="section-cta">
-      <div className="head-box">
+      <div className="section-cta__head-box">
         <h2 className="heading-secondary">
           Você está procurando <br /> algum modelo em específico?
         </h2>

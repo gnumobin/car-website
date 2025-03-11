@@ -1,9 +1,38 @@
 .product {
     display: inline-block;
+    padding: 2rem 2rem 1.5rem 2rem;
     border: 1px solid var(--grey-color-tint-1);
     border-radius: var(--big-radius);
-    padding: 2rem 2rem 1.5rem 2rem;
+    margin: 10px;
+
+    &__content-box {
+        padding-top: 3rem;
+       
+        > *:not(:last-child) {
+            margin-bottom: 2.6rem;
+        }
+    }
     &__img {
         height: 20rem;
+    }
+    &__title {
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+    &__date {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--grey-color-shade-1);
+    }
+    &__price {
+        span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--grey-color-shade-1);
+        }
+        strong {
+            font-size: 2rem;
+            font-weight: 700;
+        }
     }
 }
