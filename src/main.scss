@@ -4,6 +4,10 @@
     --grey-color-tint-1: rgba(0, 0, 0, 0.2);
     --grey-color: rgba(0, 0, 0, 0.3);
     --grey-color-shade-1: rgba(0, 0, 0, 0.5);
+    // Radiuses
+    --small-radius: .8rem;
+    --normal-radius: 2rem;
+    --big-radius: 2.5rem;
 }
 
 *, *::before, *::after {
@@ -18,8 +22,13 @@ html {
 
 body {
     font-family: 'Poppins';
+    color: var(--primary-color);
 }
 
 ul {
     list-style-type: none;
+}
+
+a {
+    color: inherit;
 }

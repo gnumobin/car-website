@@ -1,0 +1,36 @@
+.head-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 3.4rem;
+
+    &__logo {
+        height: 3rem;
+    }
+
+    &__list {
+        display: flex;
+        gap: calc(5rem - 1.8rem);
+    }
+
+    &__item:hover &__link {
+        color: lighten(#0C0C0C, 50);
+    }
+
+    &__link {
+        text-decoration: none;
+        transition: .2s;
+        font-weight: 500;
+        font-size: 1.8rem;
+        padding: .6rem 1.8rem;
+
+        &--active {
+            color: white;
+            background-color: var(--primary-color);
+            border-radius: 9999px;
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
+    }
+}
