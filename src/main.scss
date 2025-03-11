@@ -32,3 +32,15 @@ ul {
 a {
     color: inherit;
 }
+
+button {
+    display: inline-block;
+    cursor: pointer;
+}
+
+// Global
+
+.heading-secondary {
+    font-size: 3.6rem;
+    font-weight: 600;
+}

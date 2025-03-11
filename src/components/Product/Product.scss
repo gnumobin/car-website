@@ -1,0 +1,9 @@
+.product {
+    display: inline-block;
+    border: 1px solid var(--grey-color-tint-1);
+    border-radius: var(--big-radius);
+    padding: 2rem 2rem 1.5rem 2rem;
+    &__img {
+        height: 20rem;
+    }
+}

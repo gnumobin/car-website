@@ -1,0 +1,51 @@
+.section-cta {
+    width: 80%;
+    margin: auto;
+}
+.head-box {
+    margin-bottom: 5rem;
+
+    &__description {
+        font-size: 1.6rem;
+        margin-top: 1rem;
+    }
+}
+.cta-form {
+    font-size: 1.8rem;
+    padding: 5rem;
+    border: 1px solid var(--grey-color-shade-1);
+    border-radius: var(--normal-radius);
+   
+    &__input-box {
+        display: flex;
+        gap: 4rem;
+        margin-bottom: 4rem;
+    }
+    &__input {
+        border: 1px solid var(--grey-color-shade-1);
+        border-radius: var(--small-radius);
+        padding: 1rem 1.5rem;
+        font-size: inherit;
+        width: 25%;
+    }
+    &__submit {
+        background-color: var(--primary-color);
+        color: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: .2s;
+
+        &:hover {
+            color: white;
+        }
+    }
+    &__label {
+        display: flex;
+        gap: .5rem;
+        align-items: start;
+    }
+    &__checkbox-text {
+        font-size: 1.4rem;
+        font-weight: 300;
+        margin-top: -.3rem;
+    }
+}
