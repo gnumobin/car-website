@@ -1,0 +1,25 @@
+:root {
+    --primary-color: #0C0C0C;
+    // Grey Colors
+    --grey-color-tint-1: rgba(0, 0, 0, 0.2);
+    --grey-color: rgba(0, 0, 0, 0.3);
+    --grey-color-shade-1: rgba(0, 0, 0, 0.5);
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Poppins';
+}
+
+ul {
+    list-style-type: none;
+}
