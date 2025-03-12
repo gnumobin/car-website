@@ -1,0 +1,39 @@
+.products {
+    padding: 10rem;
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+    }
+}
+
+.paginate {
+    margin: auto;
+    margin-top: 5rem;
+    border-radius: var(--big-radius);
+    background-color: #F7F7F7;
+    width: 30rem;
+    padding: 1.4rem 1.8rem;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    justify-content: space-between;
+
+    &__text {
+        font-size: 2rem;
+        font-weight: 400;
+        font-family: 'open sans', sans-serif;
+        color: var(--grey-color-shade-1);
+
+        span {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+    }
+    &__paginator {
+        display: flex;
+    }
+    &__item {
+        display: none;
+    }
+}

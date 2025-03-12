@@ -3,7 +3,6 @@
     padding: 2rem 2rem 1.5rem 2rem;
     border: 1px solid var(--grey-color-tint-1);
     border-radius: var(--big-radius);
-    margin: 10px;
 
     &__content-box {
         padding-top: 3rem;
@@ -13,7 +12,7 @@
         }
     }
     &__img {
-        height: 20rem;
+        width: 100%;
     }
     &__title {
         font-size: 1.6rem;
@@ -33,6 +32,33 @@
         strong {
             font-size: 2rem;
             font-weight: 700;
+        }
+    }
+    &__external {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__btns {
+        button {
+            border: 1px solid var(--grey-color-shade-1);
+            border-radius: 1rem;
+            padding: .5rem 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background-color: transparent;
+
+            &:not(:last-child) {
+                margin-right: 1rem;
+            }
+        }
+        .primary {
+            background-color: #1D85FF;
+            color: rgba(0,0,0,.7);
+            border: 1px solid #1D85FF;
+        }
+        .secondary {
+            color: var(--grey-color-shade-1);
         }
     }
 }

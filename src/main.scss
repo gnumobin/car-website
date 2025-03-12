@@ -9,8 +9,8 @@
     --normal-radius: 2rem;
     --big-radius: 2.5rem;
     // Font Sizes
-    --size-short-heading: 2rem;
-    --size-item: 1.9rem;
+    --size-short-heading: 1.9rem;
+    --size-item: 1.8rem;
 }
 
 *, *::before, *::after {
@@ -24,9 +24,9 @@ html {
 }
 
 body {
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
     color: var(--primary-color);
-    background-color: #F7F7F7;
+    // background-color: #F7F7F7;
 }
 
 ul {

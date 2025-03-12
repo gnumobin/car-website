@@ -1,0 +1,11 @@
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &__heading {
+        font-size: 2rem;
+        color: var(--grey-color-shade-1);
+        margin-bottom: 1.5rem;
+    }
+}

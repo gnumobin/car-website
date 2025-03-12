@@ -3,15 +3,17 @@
   margin: 0 auto;
   border-top: 1px solid var(--grey-color);
   padding-top: 6rem;
+  padding-bottom: 3rem;
   margin-top: 7rem;
 
   &__nav {
     margin-bottom: 6rem;
-    display: flex;
-    gap: 10rem;
+    // display: flex;
+    display: grid;
+    grid-template-columns: 4fr 3fr 3fr;
+    gap: 1rem;
 
     > * {
-      // padding: 2rem;
       display: flex;
       flex-direction: column;
     }
@@ -23,7 +25,7 @@
     gap: 2rem;
   }
   &__social-text {
-    font-size: var(--size-item);
+    font-size: 1.9rem;
     font-weight: 500;
   }
 
@@ -32,14 +34,14 @@
     gap: 6.6rem;
   }
 
+  // Contact Box
+
   &__contact-heading {
     margin-bottom: 3.2rem;
-    font-size: 2rem;
+    font-size: var(--size-short-heading);
     font-weight: 600;
     letter-spacing: 7%;
   }
-
-  // Contact Box
 
   &__list {
     display: flex;
