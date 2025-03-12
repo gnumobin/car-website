@@ -3,6 +3,7 @@
     padding: 2rem 2rem 1.5rem 2rem;
     border: 1px solid var(--grey-color-tint-1);
     border-radius: var(--big-radius);
+    transition: .2s;
 
     &__content-box {
         padding-top: 3rem;
@@ -61,4 +62,11 @@
             color: var(--grey-color-shade-1);
         }
     }
+
+}
+
+.product:hover {
+    border-color: transparent;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.2);
+    transform: translateY(-.3rem);
 }
