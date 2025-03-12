@@ -36,8 +36,6 @@ const Paginate = ({
   );
 };
 
-export default Paginate;
-
 const leftIconStyle = {
   fontSize: "4rem",
   marginRight: "2.5rem",
@@ -47,3 +45,6 @@ const rightIconStyle = {
   fontSize: "4rem",
   cursor: "pointer",
 };
+
+
+export default Paginate;

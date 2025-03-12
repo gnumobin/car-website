@@ -4,7 +4,6 @@
 
 - color
 - fuel
-- "Electric"
 - id
 - interior
 - main_image

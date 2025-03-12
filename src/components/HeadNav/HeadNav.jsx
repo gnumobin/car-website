@@ -12,7 +12,7 @@ const HeadNav = _ => {
         </div>
         <ul className="head-nav__list">
             <li className="head-nav__item">
-                <Link className='head-nav__link'>Sobre</Link>
+                <Link className='head-nav__link' to={'/'}>Sobre</Link>
             </li>
             <li className="head-nav__item">
                 <Link className='head-nav__link'>Contato</Link>
@@ -21,7 +21,7 @@ const HeadNav = _ => {
                 <Link className='head-nav__link'>Anunciar</Link>
             </li>
             <li className="head-nav__item">
-                <Link className='head-nav__link head-nav__link--active'>
+                <Link className='head-nav__link head-nav__link--active' to={'/products'}>
                     Estoque
                 </Link>
             </li>
