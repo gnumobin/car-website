@@ -1,0 +1,29 @@
+.feature-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 5rem;
+    border: 1px solid var(--grey-color-tint-1);
+    border-right: none;
+    border-radius: var(--big-radius);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 8rem;
+    // Test purpse
+    margin-top: 5rem;
+    width: 60%;
+    margin-left: auto;
+}
+.feature-box {
+    letter-spacing: 10%;
+
+    &__sub-heading {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--grey-color-shade-1);
+        display: block;
+    }
+    &__heading {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+}

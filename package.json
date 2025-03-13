@@ -1,9 +1,9 @@
 {
   "name": "car-website",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
-  "homepage": "http://gnumobin.github.io/car-website",
+  "homepage": "https://gnumobin.github.io/car-website",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
