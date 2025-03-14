@@ -1,7 +1,7 @@
 import './FeatureBox.scss';
 
 const FeatureBox = _ => {
-    return <div className="feature-container">
+    return <div className="feature-container" id='featureBox'>
         <div className="feature-box">
             <span className='feature-box__sub-heading'>MOTOR</span>
             <strong className='feature-box__heading'>2.8 4 CILINDROS</strong>

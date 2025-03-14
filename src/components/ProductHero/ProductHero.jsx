@@ -21,8 +21,10 @@ const ProductHero = () => {
                 <img src={HeroImg} alt="a picture of some car" className='info-hero__img' />
             </div>
         </div>
-        <p align='center'>
+        <p align='center' >
+            <a href="#pictureBox">
             <ExpandMoreIcon sx={{fontSize: '4.8rem', color: 'rgba(0,0,0,.5)'}}/>
+            </a>
         </p>
     </section>
 }

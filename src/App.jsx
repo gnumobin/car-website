@@ -9,8 +9,8 @@ function App() {
   return <>
     <HeadNav />
     <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/products' element={<ProductsPage />} />
+      <Route path='/' element={<ProductsPage />} />
+      <Route path='/products' element={<HomePage />} />
       <Route path='/product' element={<ProductPage />} />
     </Routes>
   </>

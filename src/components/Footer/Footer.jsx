@@ -3,7 +3,7 @@ import Logo from "../../assets/img/logo.png";
 import { Instagram,Facebook,YouTube,WhatsApp,ArrowForward,} from "@mui/icons-material";
 
 const Footer = _ => {
-  return <footer className="footer">
+  return <footer className="footer" id="footer">
       <nav className="footer__nav">
         <div className="footer__social-box">
           <div className="footer__logo-box">

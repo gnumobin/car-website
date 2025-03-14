@@ -23,11 +23,12 @@
   &__item {
     color: var(--grey-color);
     list-style: none;
+    // display: none;
+  }
 
-    &--active {
-      list-style: initial;
-      color: var(--primary-color);
-      font-weight: 700;
-    }
+  &__item--active {
+    list-style: initial;
+    color: var(--primary-color);
+    font-weight: 700;
   }
 }

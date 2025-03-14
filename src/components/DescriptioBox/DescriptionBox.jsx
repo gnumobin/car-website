@@ -29,8 +29,8 @@ const texts = [
 
 const DescriptionBox = () => {
   return (
-    <div className="description">
-      {texts.map(p => <p className="description__p">{p}</p>)}
+    <div className="description" id="description">
+      {texts.map((p, i) => <p key={i} className="description__p">{p}</p>)}
     </div>
   );
 };

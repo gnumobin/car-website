@@ -1,24 +1,30 @@
 import "./SideNav.scss";
 
-const SideNav = () => {
+const SideNav = ({ active }) => {
+
+  const isActive = (number) =>
+    active == number
+      ? "side-nav__item side-nav__item--active"
+      : "side-nav__item";
+
   return (
     <nav className="side-nav">
       <strong className="side-nav__product-name">TOYOTA</strong>
       <h3 className="side-nav__heading-tertiary">SW4 DIAMOND</h3>
 
       <ul className="side-nav__list">
-        <li className="side-nav__item">
-          <a href="#" className="side-nav__link">
+        <li className={isActive(0)}>
+          <a href="#pictureBox" className="side-nav__link">
             Imagens
           </a>
         </li>
-        <li className="side-nav__item">
-          <a href="#" className="side-nav__link side-nav__link--active">
+        <li className={isActive(1)}>
+          <a href="#featureBox" className="side-nav__link">
             Ficha técnica
           </a>
         </li>
-        <li className="side-nav__item side-nav__item--active">
-          <a href="#" className="side-nav__link">
+        <li className={isActive(2)}>
+          <a href="#description" className="side-nav__link">
             Detalhes
           </a>
         </li>
