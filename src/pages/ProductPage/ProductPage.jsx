@@ -4,6 +4,7 @@ import CTAForm from '../../components/CTAForm/CTAForm';
 import Footer from '../../components/Footer/Footer';
 import FeatureBox from '../../components/FeatureBox/FeatureBox';
 import SideNav from '../../components/SideNav/SideNav';
+import DescriptionBox from '../../components/DescriptioBox/DescriptionBox';
 
 const ProductPage = _ => {
     return <section className="section-product">
@@ -12,8 +13,12 @@ const ProductPage = _ => {
             <SideNav />
             <FeatureBox />
         </div>
-        <CTAForm />
-        <Footer />
+        <div className="row">
+            <SideNav />
+            <DescriptionBox />
+        </div>
+        {/* <CTAForm />
+        <Footer /> */}
     </section>
 }
 
