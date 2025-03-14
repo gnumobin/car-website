@@ -1,0 +1,25 @@
+.embla {
+  &__viewport {
+    overflow: hidden;
+  }
+  &__container {
+    display: flex;
+    gap: 2rem;
+  }
+  &__slide {
+    flex: 0 0 90%;
+    justify-content: center;
+    align-items: center;
+  }
+  &__img-box {
+    padding: 1rem;
+  }
+  &__img {
+    width: 100%;
+    border-radius: 2.8rem;
+  }
+  &__btn {
+    border: none;
+    background-color: transparent;
+  }
+}

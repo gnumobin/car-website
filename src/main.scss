@@ -1,49 +1,52 @@
 :root {
-    --primary-color: #0C0C0C;
-    // Grey Colors
-    --grey-color-tint-1: rgba(0, 0, 0, 0.2);
-    --grey-color: rgba(0, 0, 0, 0.3);
-    --grey-color-shade-1: rgba(0, 0, 0, 0.5);
-    // Radiuses
-    --small-radius: .8rem;
-    --normal-radius: 2rem;
-    --big-radius: 2.5rem;
-    // Font Sizes
-    --size-short-heading: 1.9rem;
-    --size-item: 1.8rem;
+  --primary-color: #0c0c0c;
+  // Grey Colors
+  --grey-color-tint-1: rgba(0, 0, 0, 0.2);
+  --grey-color: rgba(0, 0, 0, 0.3);
+  --grey-color-shade-1: rgba(0, 0, 0, 0.5);
+  // Radiuses
+  --small-radius: 0.8rem;
+  --normal-radius: 2rem;
+  --big-radius: 2.5rem;
+  // Font Sizes
+  --size-short-heading: 1.9rem;
+  --size-item: 1.8rem;
 }
 
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    color: var(--primary-color);
-    // background-color: #F7F7F7;
+  font-family: "Poppins", sans-serif;
+  color: var(--primary-color);
+  // background-color: #F7F7F7;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 a {
-    color: inherit;
+  color: inherit;
 }
 
 button {
-    display: inline-block;
-    cursor: pointer;
+  display: inline-block;
+  cursor: pointer;
 }
 
-a:link, a:visited {
-    text-decoration: none;
+a:link,
+a:visited {
+  text-decoration: none;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -56,6 +59,6 @@ input::-webkit-inner-spin-button {
 // Global
 
 .heading-secondary {
-    font-size: 3.6rem;
-    font-weight: 600;
+  font-size: 3.6rem;
+  font-weight: 600;
 }
