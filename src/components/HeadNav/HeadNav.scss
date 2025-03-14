@@ -1,36 +1,85 @@
-.head-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 3.4rem 6rem 0;
+@import "../../abstracts/variables.scss";
 
-    &__logo {
-        height: 3rem;
+.head-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 3.4rem 6rem 0;
+  align-items: center;
+
+  &__logo {
+    height: 3rem;
+  }
+
+  &__list {
+    display: flex;
+    gap: calc(5rem - 1.8rem);
+  }
+
+  &__item:hover &__link {
+    color: var(--grey-color);
+  }
+
+  &__link {
+    text-decoration: none;
+    transition: 0.2s;
+    font-weight: 500;
+    font-size: 1.8rem;
+    padding: 0.6rem 1.8rem;
+
+    &--active {
+      color: white;
+      background-color: var(--primary-color);
+      border-radius: var(--normal-radius);
+
+      &:hover {
+        background-color: transparent;
+      }
     }
+  }
+}
+
+// Not show mobile version items
+.head-nav {
+  #toggleMenu {
+    display: none;
+  }
+  &__toggle {
+    display: none;
+  }
+}
+
+@include responsive(small-desktop) {
+  .head-nav {
+    position: relative;
 
     &__list {
-        display: flex;
-        gap: calc(5rem - 1.8rem);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100dvh;
+      background-color: rgba(0, 0, 0, 0.4);
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      backdrop-filter: blur(3px);
+      justify-content: center;
+      gap: 5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+    }
+    &__link:not(&__link--active) {
+      padding-left: 0;
+    }
+    &__toggle {
+      z-index: 9999;
+      display: block;
     }
 
-    &__item:hover &__link {
-        color: var(--grey-color);
+    #toggleMenu:checked ~ &__list {
+      opacity: 1;
+      visibility: visible;
     }
-
-    &__link {
-        text-decoration: none;
-        transition: .2s;
-        font-weight: 500;
-        font-size: 1.8rem;
-        padding: .6rem 1.8rem;
-
-        &--active {
-            color: white;
-            background-color: var(--primary-color);
-            border-radius: var(--normal-radius);
-
-            &:hover {
-                background-color: transparent;
-            }
-        }
-    }
+  }
 }

@@ -1,0 +1,16 @@
+$desktop-size: 81.25em; // 1300px
+$small-desktop-size: 62.55em; // 1000px
+
+
+@mixin responsive($device) {
+    @if($device : 'desktop') {
+        @media only screen and (max-width: $desktop-size) {
+            @content;
+        }
+    }
+    @if($device : 'small-desktop') {
+        @media only screen and (max-width: $small-desktop-size) {
+            @content;
+        }
+    }
+}
