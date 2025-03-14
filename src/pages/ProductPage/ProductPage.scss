@@ -1,0 +1,8 @@
+.row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    gap: 3rem;
+    // test purpse
+    margin-top: 20rem;
+}

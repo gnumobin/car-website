@@ -1,0 +1,33 @@
+.side-nav {
+  font-weight: 700;
+  justify-self: center;
+  &__product-name {
+    color: var(--grey-color-shade-1);
+    font-size: 2.4rem;
+    letter-spacing: 30%;
+    margin-bottom: 1rem;
+  }
+  &__heading-tertiary {
+    font-size: 3.2rem;
+    letter-spacing: 10%;
+  }
+  &__list {
+    font-weight: 400;
+    font-size: 2.4rem;
+    // Gutter
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  &__item {
+    color: var(--grey-color);
+    list-style: none;
+
+    &--active {
+      list-style: initial;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+  }
+}

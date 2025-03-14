@@ -5,12 +5,13 @@
         display: grid;
         grid-template-columns: 1fr 2fr;
         gap: 5rem;
+        padding-top: 8rem;
+        padding-bottom: 5rem;
     }
     &__heading {
         font-size: 4.2rem;
         font-weight: 600;
         text-align: center;
         width: 31.118977946%;
-        margin-bottom: 6rem;
     }
 }
