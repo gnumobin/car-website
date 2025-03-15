@@ -8,6 +8,7 @@ import Loading from "../../components/Loading/Loading";
 import SearchForm from "../../components/SearchForm/SearchForm";
 
 const ProductsPage = (_) => {
+  
   const { data: cars, isPending } = useQuery({
     queryKey: ["cars"],
     queryFn: getCars,

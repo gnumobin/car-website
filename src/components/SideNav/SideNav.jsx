@@ -1,7 +1,6 @@
 import "./SideNav.scss";
 
-const SideNav = ({ active }) => {
-
+const SideNav = ({ active, car: { name, motor } }) => {
   const isActive = (number) =>
     active == number
       ? "side-nav__item side-nav__item--active"
@@ -9,8 +8,8 @@ const SideNav = ({ active }) => {
 
   return (
     <nav className="side-nav">
-      <strong className="side-nav__product-name">TOYOTA</strong>
-      <h3 className="side-nav__heading-tertiary">SW4 DIAMOND</h3>
+      <strong className="side-nav__product-name">{name}</strong>
+      <h3 className="side-nav__heading-tertiary">{motor}</h3>
 
       <ul className="side-nav__list">
         <li className={isActive(0)}>

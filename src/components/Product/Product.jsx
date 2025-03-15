@@ -4,7 +4,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link } from "react-router";
 
 const Product = ({ car }) => {
-  const { name, max_speed, price, year, main_image } = car;
+  const { name, max_speed, price, year, is_bulletproof, is_electric, id } = car;
 
   return (
     <figure className="product">
@@ -24,15 +24,15 @@ const Product = ({ car }) => {
           <span>R$</span> <strong>{price}</strong>
         </p>
         <div className="product__external">
-          <Link to={"/product"} params={{ testvalue: "hello" }}>
+          <Link to={"/product/"+id} params={{ testvalue: "hello" }}>
             <ChevronRightIcon
               sx={{ fontSize: "3rem", color: "rgba(0,0,0,.5)" }}
             />
           </Link>
 
           <div className="product__btns">
-            <button className="secondary">HÍBRIDO</button>
-            <button className="primary">BLINDADO</button>
+            {is_electric && <button className="secondary">HÍBRIDO</button>}
+            {is_bulletproof && <button className="primary">BLINDADO</button>}
           </div>
         </div>
       </figcaption>
