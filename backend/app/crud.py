@@ -1,40 +1,83 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app.models import Car
+from sqlalchemy.orm import joinedload
+from app.models import Car, CarImage
 from app.schemas import CarCreate, CarUpdate
 
-async def create_car(db: AsyncSession, car_data: CarCreate):
+async def create_car(db: AsyncSession, car: CarCreate):
     """
-    Create a new car and store it in the database.
+    Creates a new car and its associated images in the database.
+
+    Args:
+        db (AsyncSession): An asynchronous database session.
+        car (CarCreate): A Pydantic schema containing the car's data.
+
+    Returns:
+        Car: The newly created car object.
     """
-    new_car = Car(**car_data.model_dump())
+    # Create the car object excluding the images field
+    new_car = Car(**car.model_dump(exclude={"images"}))
     db.add(new_car)
     await db.commit()
     await db.refresh(new_car)
+
+    # Add associated images for the car
+    for image in car.images:
+        car_image = CarImage(car_id=new_car.id, image_url=image.image_url)
+        db.add(car_image)
+        await db.commit()
+
     return new_car
 
 async def get_car(db: AsyncSession, car_id: int):
     """
-    Retrieve a car by its ID.
+    Retrieves a car by its ID, including its associated images.
+
+    Args:
+        db (AsyncSession): An asynchronous database session.
+        car_id (int): The ID of the car to retrieve.
+
+    Returns:
+        Car: The car object with its associated images, or None if not found.
     """
-    result = await db.execute(select(Car).where(Car.id == car_id))
+    stmt = select(Car).options(joinedload(Car.images)).where(Car.id == car_id)
+    result = await db.execute(stmt)
     return result.scalar_one_or_none()
 
 async def get_all_cars(db: AsyncSession):
     """
-    Retrieve all cars from the database.
+    Retrieves all cars from the database, including their associated images.
+
+    Args:
+        db (AsyncSession): An asynchronous database session.
+
+    Returns:
+        List[Car]: A list of all cars with their associated images.
     """
-    result = await db.execute(select(Car))
+    stmt = select(Car).options(joinedload(Car.images))
+    result = await db.execute(stmt)
     return result.scalars().all()
 
 async def update_car(db: AsyncSession, car_id: int, car_data: CarUpdate):
     """
-    Update a car by ID.
+    Updates an existing car's data in the database.
+
+    Args:
+        db (AsyncSession): An asynchronous database session.
+        car_id (int): The ID of the car to update.
+        car_data (CarUpdate): A Pydantic schema containing the updated data.
+
+    Returns:
+        Car: The updated car object, or None if the car is not found.
     """
-    car = await get_car(db, car_id)
+    stmt = select(Car).where(Car.id == car_id)
+    result = await db.execute(stmt)
+    car = result.scalar_one_or_none()
+
     if not car:
         return None
 
+    # Update only the fields provided in the request
     for key, value in car_data.model_dump(exclude_unset=True).items():
         setattr(car, key, value)
 
@@ -44,9 +87,19 @@ async def update_car(db: AsyncSession, car_id: int, car_data: CarUpdate):
 
 async def delete_car(db: AsyncSession, car_id: int):
     """
-    Delete a car by ID.
+    Deletes a car from the database by its ID.
+
+    Args:
+        db (AsyncSession): An asynchronous database session.
+        car_id (int): The ID of the car to delete.
+
+    Returns:
+        Car: The deleted car object, or None if the car is not found.
     """
-    car = await get_car(db, car_id)
+    stmt = select(Car).where(Car.id == car_id)
+    result = await db.execute(stmt)
+    car = result.scalar_one_or_none()
+
     if not car:
         return None
 
