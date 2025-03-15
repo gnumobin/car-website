@@ -11,6 +11,7 @@ import boto3
 import uuid
 
 # S3 Configuration
+cloud_address_prefix = "https://cars-storage.abolfazlrabiei.ir"
 s3_client = boto3.client(
     "s3",
     endpoint_url=ENDPOINT,
@@ -63,7 +64,7 @@ async def add_image_to_gallery(
         )
 
         # Generate the public URL for the image
-        image_url = f"https://cars-storage.abolfazlrabiei.ir/{image_key}"
+        image_url = f"{cloud_address_prefix}/{image_key}"
 
         # Save the image metadata in the database
         new_image = CarImage(car_id=car_id, image_url=image_url)
