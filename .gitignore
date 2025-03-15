@@ -28,4 +28,4 @@ backend/test.py
 venv/
 Dockerfile
 .env
-
+/backend/app/config.py
