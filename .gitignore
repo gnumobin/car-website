@@ -24,8 +24,7 @@ dist-ssr
 *.sw?
 
 #python ignores
-backend/test.py
+backend/app/config.py
 venv/
 Dockerfile
 .env
-/backend/app/config.py
