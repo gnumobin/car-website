@@ -1,13 +1,25 @@
+@import "../../abstracts/variables.scss";
+
 .footer {
-  background: #F7F7F7;
+  background: #f7f7f7;
   padding: 13rem 15rem 3rem 15rem;
   border-top: 1px solid var(--grey-color);
+
+  @include responsive("desktop") {
+    padding: 13rem 7.5em 3rem 7.5em;
+  }
 
   &__nav {
     margin-bottom: 6rem;
     display: grid;
     grid-template-columns: 4fr 3fr 3fr;
     gap: 1rem;
+
+    @include responsive("desktop") {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      row-gap: 6rem;
+    }
 
     > * {
       display: flex;
@@ -62,6 +74,9 @@
 
   &__cta {
     gap: 3.75rem;
+    @include responsive("desktop") {
+      grid-column: 1 / -1;
+    }
   }
 
   &__cta-heading {

@@ -48,7 +48,7 @@
   }
 }
 
-@include responsive(small-desktop) {
+@include responsive('small-desktop') {
   .head-nav {
     position: relative;
 

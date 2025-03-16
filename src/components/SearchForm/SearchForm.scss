@@ -1,3 +1,5 @@
+@import "../../abstracts/variables.scss";
+
 .select {
     border-radius: var(--big-radius);
     font-size: 1.7rem;
@@ -20,10 +22,18 @@
         grid-template-columns: repeat(2, 1fr);
         align-items: center;
         gap: 7rem;
+        
+        @include responsive('desktop') {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
     }
 
     &__column:nth-last-of-type(odd) label {
         text-align: right;
+        @include responsive('desktop') {
+           text-align: left;
+        }
     }
 
     &__intermediary {
@@ -34,6 +44,10 @@
         font-size: 1.4rem;
         font-weight: 600;
         color: var(--grey-color-shade-1);
+
+        @include responsive('desktop') {
+            display: none;
+        }
     }
 
     &__label {

@@ -9,11 +9,20 @@
         gap: 5rem;
         padding-top: 8rem;
         padding-bottom: 5rem;
+
+        @include responsive('portrait-tablet') {
+            grid-template-columns: 1fr 1fr;
+        }
     }
     &__heading {
         font-size: 4.2rem;
         font-weight: 600;
         text-align: center;
         width: 31.118977946%;
+
+        @include responsive('landscape-tablet') {
+            // width: 50%;
+            font-size: 2.8rem;
+        }
     }
 }

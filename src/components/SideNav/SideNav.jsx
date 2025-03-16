@@ -1,3 +1,4 @@
+import FeatureBox from "../FeatureBox/FeatureBox";
 import "./SideNav.scss";
 
 const SideNav = ({ active, car: { name, motor } }) => {
@@ -13,7 +14,14 @@ const SideNav = ({ active, car: { name, motor } }) => {
 
       <ul className="side-nav__list">
         <li className={isActive(0)}>
-          <a href="#pictureBox" className="side-nav__link">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              FeatureBox.scrollTo({ top: 5000, behavior: "smooth" });
+            }}
+            className="side-nav__link"
+          >
             Imagens
           </a>
         </li>

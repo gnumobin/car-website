@@ -1,3 +1,5 @@
+@import "abstracts/variables.scss";
+
 :root {
   --primary-color: #0c0c0c;
   // Grey Colors
@@ -24,6 +26,17 @@
 html {
   font-size: 62.5%;
   scroll-behavior: smooth;
+
+  @include responsive('landscape-tablet') {
+    font-size: 52.5%;
+  }
+  @include responsive('portrait-tablet') {
+    font-size: 48%;
+  }
+  // @include responsive('big-mobile-size') {
+  //   font-size: 42.5%;
+  //   background-color: red;
+  // }
 }
 
 body {

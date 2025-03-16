@@ -6,8 +6,14 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 3rem;
 
-        @include responsive('desktop-size') {
+        @include responsive('desktop') {
             grid-template-columns: repeat(2, 1fr);
+            background-color: red;
+        }
+        
+        @include responsive('portrait-tablet') {
+            grid-template-columns: 1fr;
+            background-color: blue;
         }
     }
 }

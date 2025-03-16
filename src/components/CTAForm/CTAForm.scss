@@ -1,6 +1,12 @@
+@import "../../abstracts/variables.scss";
+
 .section-cta {
     background-color: #F7F7F7;
     padding: 10rem 18rem 13rem 18rem;
+
+    @include responsive('landscape-tablet') {
+        padding: 10rem 13rem 13rem 13rem;
+    }
 
     &__head-box {
         margin-bottom: 5rem;
@@ -19,9 +25,13 @@
     border-radius: var(--normal-radius);
    
     &__input-box {
-        display: flex;
+        // display: flex;
         gap: 4rem;
         margin-bottom: 4rem;
+        @include responsive('landscape-tablet') {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
     &__input {
         border: 1px solid var(--grey-color-shade-1);
@@ -29,6 +39,9 @@
         padding: 1rem 1.5rem;
         font-size: inherit;
         width: 25%;
+        @include responsive('landscape-tablet') {
+            width: 100%;
+        }
     }
     &__submit {
         background-color: var(--primary-color);
