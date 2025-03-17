@@ -22,7 +22,8 @@ s3_client = boto3.client(
 router = APIRouter()
 
 
-# ========================= UPLOAD IMAGE TO GALLERY =========================
+# ========================= UPLOAD IMAGE TO GALLERY ========================
+
 @router.post("/cars/{car_id}/gallery", response_model=CarImageResponse, status_code=201)
 async def add_image_to_gallery(
     car_id: int,
@@ -55,12 +56,25 @@ async def add_image_to_gallery(
     image_key = f"cars/{car_id}/{uuid.uuid4()}.{file_extension}"
 
     try:
+        # Infer content type if not provided
+        content_type = image.content_type
+        if not content_type:
+            # Fallback to manual MIME type detection
+            mime_types = {
+                "jpg": "image/jpeg",
+                "jpeg": "image/jpeg",
+                "png": "image/png",
+                "gif": "image/gif",
+            }
+            ext = file_extension.lower()
+            content_type = mime_types.get(ext, "application/octet-stream")
+
         # Upload the image to S3
         s3_client.upload_fileobj(
             image.file,
             BUCKET_NAME,
             image_key,
-            ExtraArgs={"ContentType": image.content_type, "ACL": "public-read"},
+            ExtraArgs={"ContentType": content_type, "ACL": "public-read"},
         )
 
         # Generate the public URL for the image

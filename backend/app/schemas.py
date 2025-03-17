@@ -101,3 +101,12 @@ class CarImageCreate(BaseModel):
         image_url (str): URL of the image to be saved.
     """
     image_url: str
+
+class PaginatedCarResponse(BaseModel):
+    """
+    for paginate response cars.
+    """
+    items: List[CarResponse]
+    total: int
+    page: int
+    page_size: int

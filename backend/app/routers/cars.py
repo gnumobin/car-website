@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException , Query
+from sqlalchemy.sql import func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
@@ -7,7 +8,7 @@ import boto3
 from app.config import BUCKET_NAME, ACCESS_KEY, SECRET_KEY, ENDPOINT
 from app.database import get_db
 from app.models import Car, CarImage
-from app.schemas import CarCreate, CarUpdate, CarResponse
+from app.schemas import CarCreate, CarUpdate, CarResponse , PaginatedCarResponse
 
 # Create an API router
 router = APIRouter()
@@ -78,24 +79,69 @@ async def get_car(car_id: int, db: AsyncSession = Depends(get_db)):
     return car
 
 
-@router.get("/cars", response_model=List[CarResponse])
-async def get_all_cars(db: AsyncSession = Depends(get_db)):
+@router.get("/cars", response_model=PaginatedCarResponse)
+async def get_all_cars(
+    page: int = Query(1, ge=1, description="Page number"),
+    page_size: int = Query(10, ge=1, le=100, description="Items per page"),
+    sort_order: str = Query("asc", regex="^(asc|desc)$", description="Sort by ID (asc/desc)"),
+    make: str = Query(None, description="Filter by car make (e.g., 'Toyota')"),
+    model: str = Query(None, description="Filter by car model (e.g., 'Corolla')"),
+    min_year: int = Query(None, description="Filter cars with year ≥ [value]"),
+    max_price: float = Query(None, description="Filter cars with price ≤ [value]"),
+    db: AsyncSession = Depends(get_db)
+):
     """
-    Retrieve a list of all cars with their associated images.
+    Retrieve a paginated, sorted, and filtered list of cars with their associated images.
 
     Args:
+        page (int): Page number (default: 1).
+        page_size (int): Items per page (default: 10, max: 100).
+        sort_order (str): Sort cars by ID in 'asc' or 'desc' order.
+        make (str): Filter cars by make (exact match).
+        model (str): Filter cars by model (exact match).
+        min_year (int): Filter cars with year ≥ [value].
+        max_price (float): Filter cars with price ≤ [value].
         db (AsyncSession): An asynchronous database session.
 
     Returns:
-        List[CarResponse]: A list of all cars with their associated images.
+        PaginatedCarResponse: Paginated, sorted, and filtered list of cars with metadata.
     """
+    offset = (page - 1) * page_size
+
+    # Base query with optional filters
     stmt = select(Car).options(selectinload(Car.images))
+    
+    # Apply filters
+    if make:
+        stmt = stmt.filter(Car.make == make)
+    if model:
+        stmt = stmt.filter(Car.model == model)
+    if min_year:
+        stmt = stmt.filter(Car.year >= min_year)
+    if max_price:
+        stmt = stmt.filter(Car.price <= max_price)
+    
+    # Apply sorting
+    stmt = stmt.order_by(Car.id.asc() if sort_order == "asc" else Car.id.desc())
+
+    # Get total count of filtered cars
+    total_query = select(func.count()).select_from(stmt.subquery().alias())
+    total_result = await db.execute(total_query)
+    total = total_result.scalar()
+
+    # Apply pagination
+    stmt = stmt.offset(offset).limit(page_size)
+
+    # Execute query
     result = await db.execute(stmt)
     cars = result.scalars().all()
 
-    return cars
-
-
+    return {
+        "items": cars,
+        "total": total,
+        "page": page,
+        "page_size": page_size
+    }
 @router.put("/cars/{car_id}", response_model=CarResponse, status_code=200)
 async def update_car(car_id: int, car_data: CarUpdate, db: AsyncSession = Depends(get_db)):
     """
