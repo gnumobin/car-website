@@ -8,6 +8,10 @@
         padding: 10rem 13rem 13rem 13rem;
     }
 
+    @include responsive('big-mobile') {
+        padding: 10rem 5rem 13rem 5rem;
+    }
+
     &__head-box {
         margin-bottom: 5rem;
 
@@ -25,12 +29,16 @@
     border-radius: var(--normal-radius);
    
     &__input-box {
-        // display: flex;
+        display: flex;
         gap: 4rem;
         margin-bottom: 4rem;
         @include responsive('landscape-tablet') {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include responsive("big-mobile") {
+            grid-template-columns: 1fr;
         }
     }
     &__input {
@@ -39,6 +47,7 @@
         padding: 1rem 1.5rem;
         font-size: inherit;
         width: 25%;
+
         @include responsive('landscape-tablet') {
             width: 100%;
         }

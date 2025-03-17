@@ -33,10 +33,9 @@ html {
   @include responsive('portrait-tablet') {
     font-size: 48%;
   }
-  // @include responsive('big-mobile-size') {
-  //   font-size: 42.5%;
-  //   background-color: red;
-  // }
+  @include responsive('big-mobile-size') {
+    font-size: 42.5%;
+  }
 }
 
 body {
@@ -75,4 +74,8 @@ input::-webkit-inner-spin-button {
 .heading-secondary {
   font-size: 3.6rem;
   font-weight: 600;
+
+  @include responsive("big-mobile") {
+    font-size: 2.4rem;
+  }
 }

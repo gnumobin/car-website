@@ -20,7 +20,7 @@ const ProductsPage = (_) => {
         <h1 className="products-container__heading">Nossos modelos</h1>
         <div className="products-container__grid">
           <aside>
-            <SearchForm />
+            <SearchForm cars={cars}/>
           </aside>
           <div className="products-container__products">
             {isPending ? <Loading /> : <Products cars={cars} />}

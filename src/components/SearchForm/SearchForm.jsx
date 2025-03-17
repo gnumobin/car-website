@@ -1,7 +1,8 @@
 import Select from "react-select";
 import "./SearchForm.scss";
+import { useState } from "react";
 
-const SearchForm = (_) => {
+const SearchForm = ({cars}) => {
   const options = [{ value: "mobin", label: "first name" }];
   const selectChangeHandle = (selected) => {
     console.log(selected);
@@ -10,6 +11,13 @@ const SearchForm = (_) => {
     control: (styles) => ({ ...styles, ...mySelectStyles }),
     option: (styles) => ({ ...styles, ...mySelectStyles }),
   };
+
+  // Form Input states 
+  const [armored, setArmored] = useState();
+  const [motor, setMotor] = useState();
+  const [year, setYear] = useState();
+  const [value, setValue] = useState();
+  const [kilometer, setKilometer] = useState();
 
   return (
     <form action="#" className="search-form">
@@ -152,8 +160,8 @@ const SearchForm = (_) => {
         </div>
       </div>
 
-      <button className="search-form__delete">Limpar</button>
-      <button className="search-form__submit">Filtrar</button>
+      <button className="search-form__delete" type="reset">Limpar</button>
+      <button className="search-form__submit" >Filtrar</button>
     </form>
   );
 };

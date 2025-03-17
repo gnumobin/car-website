@@ -1,3 +1,5 @@
+@import '../../abstracts/variables.scss';
+
 .paginate {
   margin: auto;
   margin-top: 5rem;
@@ -10,11 +12,19 @@
   align-items: center;
   justify-content: space-between;
 
+  @include responsive('big-mobile') {
+    gap: 1rem;
+  }
+
   &__text {
     font-size: 2rem;
     font-weight: 400;
     font-family: "open sans", sans-serif;
     color: var(--grey-color-shade-1);
+
+    @include responsive('big-mobile') {
+      font-size: 1.6rem;
+    }
 
     span,
     strong {

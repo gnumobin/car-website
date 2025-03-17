@@ -21,6 +21,11 @@
       row-gap: 6rem;
     }
 
+    @include responsive("portrait-tablet") {
+      grid-template-columns: 1fr;
+      gap: 8rem;
+    }
+
     > * {
       display: flex;
       flex-direction: column;
@@ -31,6 +36,7 @@
 
   &__social-box {
     gap: 2rem;
+
   }
   &__social-text {
     font-size: 1.9rem;
@@ -55,6 +61,7 @@
     display: flex;
     flex-direction: column;
     gap: 3.2rem;
+
   }
 
   &__list-link {

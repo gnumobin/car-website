@@ -16,6 +16,10 @@
     flex-direction: column;
     gap: 2rem;
 
+    @include responsive('big-mobile') {
+        padding: 3rem 2.5rem 10rem;
+    }
+
     &__row {
         position: relative;
         display: grid;

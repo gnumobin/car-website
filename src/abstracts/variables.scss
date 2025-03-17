@@ -5,32 +5,32 @@ $portrait-tablet-size: 42.5em; // 680px
 $big-mobile-size: 31.25em; // 500px
 
 @mixin responsive($device) {
-  @if ($device: "desktop") {
+  @if ($device == "desktop") {
     @media only screen and (max-width: $desktop-size) {
       @content;
     }
   };
 
-  @if ($device: "small-desktop") {
+  @if ($device == "small-desktop") {
     @media only screen and (max-width: $small-desktop-size) {
       @content;
     }
   };
 
-  @if ($device: "landscape-tablet") {
+  @if ($device == "landscape-tablet") {
     @media only screen and (max-width: $landscape-tablet-size) {
       @content;
     }
   };
 
-  @if ($device: "portrait-tablet") {
+  @if ($device == "portrait-tablet") {
     @media only screen and (max-width: $portrait-tablet-size) {
       @content;
     }
   };
 
-  @if ($device: "big-mobile") {
-    @media only screen and (max-width: $portrait-tablet-size) {
+  @if ($device == "big-mobile") {
+    @media only screen and (max-width: $big-mobile-size) {
       @content;
     }
   };
