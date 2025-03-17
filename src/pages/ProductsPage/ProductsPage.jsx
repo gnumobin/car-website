@@ -10,25 +10,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const ProductsPage = () => {
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [year, setYear] = useState({ start: "2020", end: "2025" });
-  const [value, setValue] = useState({ start: "10", end: "200000" });
-  const [kilometer, setKilometer] = useState({ start: "", end: "" });
+
+  const [pageNumber, setPageNumber] = useState(1);
 
   const { data: cars, isPending } = useQuery({
-    queryKey: ["cars"],
-    queryFn: getCars,
-    select: (data) => {
-      return data.filter((car) => {
-
-        // console.log((car.year >= year.start && car.year <= year.end) && (car.price >= value.start && car.price <= value.end) && (car.max_speed >= kilometer.start && car.max_speed <= kilometer.end))
-        // console.log(car.max_speed)
-
-        // console.log(isSubmit ? "hi" : "bye");
-        return (car.year >= year.start && car.year <= year.end) && (car.price >= value.start && car.price <= value.end);
-      });
-      return data;
-    },
+    queryKey: ["cars", pageNumber],
+    queryFn: () => getCars(pageNumber),
   });
 
   const submitSearchHandle = (year, value, kilometer, e) => {
@@ -36,11 +23,8 @@ const ProductsPage = () => {
 
     setIsSubmit(true);
 
-    setYear(year)
-    setValue(value)
-    setKilometer(kilometer)
-
   };
+
 
   return (
     <main className="section-products">
@@ -54,7 +38,7 @@ const ProductsPage = () => {
               <SearchForm cars={cars} submitSearchHandle={submitSearchHandle} />
             </aside>
             <div className="products-container__products">
-              <Products cars={cars} />
+              <Products cars={cars} setPageNumber={setPageNumber} pageNumber={pageNumber}/>
             </div>
           </div>
         )}
@@ -65,9 +49,10 @@ const ProductsPage = () => {
   );
 };
 
-const getCars = async () => {
-  const response = axios.get("https://api-cars.abolfazlrabiei.ir/api/cars");
-  return (await response).data;
+const getCars = async (pageNumber) => {
+  const response = await axios.get("https://api-cars.abolfazlrabiei.ir/api/cars?page="+pageNumber);
+  console.log(response.data)
+  return response.data;
 };
 
 export default ProductsPage;

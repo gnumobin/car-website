@@ -5,19 +5,15 @@ import Paginate from "../Paginate/Paginate";
 import { useEffect } from "react";
 
 const Products = (props) => {
-  const { cars } = props;
+  const { cars, setPageNumber,pageNumber } = props;
 
   const [itemOffset, setItemOffset] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  window.addEventListener("resize", function (event) {
-    setWindowWidth(event.target.innerWidth);
-  });
-
-  const itemsPerPage = windowWidth >= 1000 ? 18 : 4;
+  // windowWidth >= 1000 ? 18 : 4
+  const itemsPerPage = cars.page_size;
   const endOffset = itemOffset + itemsPerPage;
-  const currentItems = cars.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(cars.length / itemsPerPage);
+  const currentItems = cars.items.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(cars.total / itemsPerPage);
 
   return (
     <div className="products">
@@ -31,7 +27,9 @@ const Products = (props) => {
         setItemOffset={setItemOffset}
         pageCount={pageCount}
         itemsPerPage={itemsPerPage}
-        cars={cars}
+        cars={cars.items}
+        setPageNumber={setPageNumber}
+        pageNumber={pageNumber}
       />
     </div>
   );
