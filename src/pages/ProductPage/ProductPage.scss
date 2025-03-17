@@ -1,15 +1,22 @@
+@import "../../abstracts/variables.scss";
+
 .row {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    align-items: center;
-    gap: 3rem;
-    // test purpse
-    padding-top: 15rem;
-    padding-bottom: 5rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  gap: 3rem;
+  // test purpse
+  padding-top: 15rem;
+  padding-bottom: 5rem;
+
+  @include responsive("big-mobile") {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 .row {
-    > nav {
-        align-self: start;
-    }
+  > nav {
+    align-self: start;
+  }
 }

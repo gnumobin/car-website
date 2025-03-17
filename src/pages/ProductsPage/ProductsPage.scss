@@ -25,7 +25,6 @@
         width: 31.118977946%;
 
         @include responsive('landscape-tablet') {
-            // width: 50%;
             font-size: 2.8rem;
         }
         @include responsive('big-mobile') {

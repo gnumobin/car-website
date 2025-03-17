@@ -1,15 +1,26 @@
+@import "../../abstracts/variables.scss";
+
 .description {
-    // width: 60%;
-    padding-right: 44rem;
-    font-weight: 400;
-    font-size: 1.8rem;
-   &__p {
+  // width: 60%;
+  padding-right: 44rem;
+  font-weight: 400;
+  font-size: 1.8rem;
+
+  @include responsive("small-desktop") {
+    padding-right: 10rem;
+  }
+
+  @include responsive("big-mobile") {
+    padding: 6rem;
+  }
+
+  &__p {
     // color: var(--grey-color-shade-1);
     letter-spacing: 10%;
     line-height: 114.99999999999999%;
 
     &:not(:last-child) {
-        margin-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-   }
+  }
 }
