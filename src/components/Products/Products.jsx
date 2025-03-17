@@ -14,7 +14,7 @@ const Products = (props) => {
     setWindowWidth(event.target.innerWidth);
   });
 
-  const itemsPerPage = windowWidth >= 1000 ? 24 : 6;
+  const itemsPerPage = windowWidth >= 1000 ? 18 : 4;
   const endOffset = itemOffset + itemsPerPage;
   const currentItems = cars.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(cars.length / itemsPerPage);
