@@ -8,8 +8,9 @@ const Paginate = ({
   pageCount,
   itemsPerPage,
   cars,
+  setPageNumber,
+  pageNumber,
 }) => {
-
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % cars.length;
     setItemOffset(newOffset);
@@ -18,15 +19,29 @@ const Paginate = ({
   return (
     <div className="paginate">
       <p className="paginate__text">
-        Página <span>{itemOffset / 24 + 1}</span> de {pageCount}
+        Página <span>{pageNumber}</span> de {pageCount}
       </p>
       <ReactPaginate
         breakLabel=""
-        nextLabel={<ChevronRight sx={rightIconStyle} />}
+        nextLabel={
+          <ChevronRight
+            sx={rightIconStyle}
+            onClick={() =>
+              setPageNumber(pageNumber < pageCount ? ++pageNumber : pageNumber)
+            }
+          />
+        }
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
-        previousLabel={<ChevronLeft sx={leftIconStyle} />}
+        previousLabel={
+          <ChevronLeft
+            sx={leftIconStyle}
+            onClick={() =>
+              setPageNumber(pageNumber > 1 ? --pageNumber : pageNumber)
+            }
+          />
+        }
         renderOnZeroPageCount={null}
         containerClassName="paginate__paginator"
         pageLinkClassName="pagiante__link"
@@ -45,6 +60,5 @@ const rightIconStyle = {
   fontSize: "4rem",
   cursor: "pointer",
 };
-
 
 export default Paginate;

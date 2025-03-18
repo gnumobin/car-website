@@ -4,7 +4,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link } from "react-router";
 
 const Product = ({ car }) => {
-  const { name, max_speed, price, year, is_bulletproof, is_electric, id } = car;
+  const { name, max_speed, price, year, is_bulletproof, is_electric, id, main_image } = car;
 
   return (
     <figure className="product">
