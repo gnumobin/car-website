@@ -51,6 +51,7 @@ class CarBase(BaseModel):
     main_image: Optional[str] = None
     is_electric: Optional[bool] = False
     is_bulletproof: Optional[bool] = False
+    make: str = None
     images: List[CarImageResponse] = []
 
 class CarCreate(CarBase):

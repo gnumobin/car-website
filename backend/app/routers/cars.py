@@ -1,14 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException , Query
+from fastapi import APIRouter, Depends, UploadFile, Form,  File, HTTPException , Query
 from sqlalchemy.sql import func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from typing import List
-import boto3
-from app.config import BUCKET_NAME, ACCESS_KEY, SECRET_KEY, ENDPOINT
+from app.config import BUCKET_NAME, ACCESS_KEY, SECRET_KEY, ENDPOINT , CLOUD_CUSTOM_PREFIX
 from app.database import get_db
 from app.models import Car, CarImage
 from app.schemas import CarCreate, CarUpdate, CarResponse , PaginatedCarResponse
+import uuid
+import boto3
 
 # Create an API router
 router = APIRouter()
@@ -21,25 +22,59 @@ s3_client = boto3.client(
     aws_secret_access_key=SECRET_KEY
 )
 
+
 @router.post("/cars", response_model=CarResponse, status_code=201)
-async def create_car(car: CarCreate, db: AsyncSession = Depends(get_db)):
+async def create_car(
+    main_image: UploadFile = File(...),           # File upload for main_image
+    car_data: str = Form(...),                   # Car data as a JSON string
+    db: AsyncSession = Depends(get_db)
+):
     """
-    Create a new car with optional images.
+    Create a new car with optional images and a main image.
 
     Args:
-        car (CarCreate): The car data to be created.
+        main_image (UploadFile): The main image file to upload.
+        car_data (str): The car data serialized as a JSON string.
         db (AsyncSession): An asynchronous database session.
 
     Returns:
-        CarResponse: The newly created car with its associated images.
+        CarResponse: The newly created car with its associated images and main image URL.
     """
-    # Create the car object excluding the images field
-    new_car = Car(**car.model_dump(exclude={"images"}))
+    try:
+        # Parse the JSON string into the CarCreate model
+        car = CarCreate.parse_raw(car_data)  # Deserialize and validate
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=f"Invalid car data: {str(e)}")
+
+    # Generate a unique key for the main image
+    file_extension = main_image.filename.split('.')[-1]
+    image_key = f"cars/{uuid.uuid4()}.{file_extension}"
+
+    # Infer content type if not provided
+    content_type = main_image.content_type or "image/jpeg"
+
+    try:
+        # Upload the main image to S3
+        s3_client.upload_fileobj(
+            main_image.file,
+            BUCKET_NAME,
+            image_key,
+            ExtraArgs={"ContentType": content_type, "ACL": "public-read"},
+        )
+        main_image_url = f"{CLOUD_CUSTOM_PREFIX}/{image_key}"
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to upload main image: {str(e)}")
+
+    # Create the car object including the main image URL
+    car_dict = car.model_dump(exclude={"images"})
+    car_dict["main_image"] = main_image_url  # Override the main_image field
+
+    new_car = Car(**car_dict)
     db.add(new_car)
     await db.commit()
     await db.refresh(new_car)
 
-    # Handle associated images
+    # Handle associated images (if any)
     if car.images:
         for image_data in car.images:
             new_image = CarImage(car_id=new_car.id, image_url=image_data.image_url)
@@ -52,7 +87,6 @@ async def create_car(car: CarCreate, db: AsyncSession = Depends(get_db)):
     car_with_images = result.scalar_one_or_none()
 
     return car_with_images
-
 
 @router.get("/cars/{car_id}", response_model=CarResponse)
 async def get_car(car_id: int, db: AsyncSession = Depends(get_db)):
@@ -85,9 +119,12 @@ async def get_all_cars(
     page_size: int = Query(10, ge=1, le=100, description="Items per page"),
     sort_order: str = Query("asc", regex="^(asc|desc)$", description="Sort by ID (asc/desc)"),
     make: str = Query(None, description="Filter by car make (e.g., 'Toyota')"),
-    model: str = Query(None, description="Filter by car model (e.g., 'Corolla')"),
     min_year: int = Query(None, description="Filter cars with year ≥ [value]"),
+    max_year: int = Query(None, description="Filter cars with year ≤ [value]"),
+    min_price: float = Query(None, description="Filter cars with price ≥ [value]"),
     max_price: float = Query(None, description="Filter cars with price ≤ [value]"),
+    is_electric: bool = Query(None, description="Filter cars that are electric (true/false)"),
+    is_bulletproof: bool = Query(None, description="Filter cars that are bulletproof (true/false)"),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -98,9 +135,12 @@ async def get_all_cars(
         page_size (int): Items per page (default: 10, max: 100).
         sort_order (str): Sort cars by ID in 'asc' or 'desc' order.
         make (str): Filter cars by make (exact match).
-        model (str): Filter cars by model (exact match).
         min_year (int): Filter cars with year ≥ [value].
+        max_year (int): Filter cars with year ≤ [value].
+        min_price (float): Filter cars with price ≥ [value].
         max_price (float): Filter cars with price ≤ [value].
+        is_electric (bool): Filter cars that are electric (true/false).
+        is_bulletproof (bool): Filter cars that are bulletproof (true/false).
         db (AsyncSession): An asynchronous database session.
 
     Returns:
@@ -114,12 +154,18 @@ async def get_all_cars(
     # Apply filters
     if make:
         stmt = stmt.filter(Car.make == make)
-    if model:
-        stmt = stmt.filter(Car.model == model)
     if min_year:
         stmt = stmt.filter(Car.year >= min_year)
+    if max_year:
+        stmt = stmt.filter(Car.year <= max_year)
+    if min_price:
+        stmt = stmt.filter(Car.price >= min_price)
     if max_price:
         stmt = stmt.filter(Car.price <= max_price)
+    if is_electric is not None:  # Handle both True and False cases
+        stmt = stmt.filter(Car.is_electric == is_electric)
+    if is_bulletproof is not None:  # Handle both True and False cases
+        stmt = stmt.filter(Car.is_bulletproof == is_bulletproof)
     
     # Apply sorting
     stmt = stmt.order_by(Car.id.asc() if sort_order == "asc" else Car.id.desc())

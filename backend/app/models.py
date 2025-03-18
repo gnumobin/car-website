@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean , Index 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -48,6 +48,11 @@ class Car(Base):
     main_image = Column(String)
     is_bulletproof = Column(Boolean, default=False, nullable=False)
     is_electric = Column(Boolean, default=False, nullable=False)
+    make = Column(String, nullable=False)
+
+    __table_args__ = (
+        Index("ix_cars_make", "make"),
+    )
 
     # Relationship to CarImage
     images = relationship("CarImage", back_populates="car", lazy="select")

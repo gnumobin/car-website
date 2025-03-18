@@ -28,3 +28,5 @@ backend/app/config.py
 venv/
 Dockerfile
 .env
+images/
+backend/test.py

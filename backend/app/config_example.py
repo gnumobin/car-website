@@ -11,6 +11,7 @@ DATABASE_URL = os.getenv(
 )
 
 # AWS S3 Configuration
+CLOUD_CUSTOM_PREFIX = "https://example.com"
 ENDPOINT = os.getenv("ENDPOINT", "ENDPOINT_DEFAULT_URL")
 BUCKET_NAME = os.getenv("BUCKET_NAME", "BUCKETNAME_DEFAULT")
 ACCESS_KEY = os.getenv("ACCESS_KEY", "ACCESSKEY_DEFAULT")
