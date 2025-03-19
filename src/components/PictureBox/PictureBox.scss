@@ -1,3 +1,5 @@
+@import '../../abstracts/variables.scss';
+
 .embla {
   &__viewport {
     overflow: hidden;
@@ -17,6 +19,12 @@
   &__img {
     width: 100%;
     border-radius: 2.8rem;
+    height: 35rem;
+    object-fit: cover;
+
+    @include responsive("big-mobile") {
+      height: 25rem;
+    }
   }
   &__btn {
     border: none;

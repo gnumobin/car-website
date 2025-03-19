@@ -33,7 +33,7 @@ const PictureBox = () => {
             <div className="embla__img-box embla__slide">
               <img
                 className="embla__img"
-                src={FirstPicture}
+                src={SecondPicture}
                 alt="picture of car"
               />
             </div>
@@ -42,7 +42,7 @@ const PictureBox = () => {
         <div className="paginate">
           <p className="paginate__text">
             <span className="bigger">1</span>
-            <small className="smaller">/12</small>
+            <small className="smaller">/2</small>
           </p>
           <div className="paginate__btns">
             <button className="embla__prev embla__btn" onClick={scrollPrev}>

@@ -20,6 +20,7 @@
   @include responsive("portrait-tablet") {
     grid-template-columns: 2fr 1fr;
     gap: 1rem;
+    margin-top: 0;
   }
 
   @include responsive("big-mobile") {
@@ -39,12 +40,26 @@
   }
   &__img-box {
     margin-top: 3rem;
+
+    @include responsive("big-mobile") {
+      grid-row: 1 / 2;
+      text-align: center;
+      margin: 0 4rem;
+      padding: .8rem;
+      border: 2px solid var(--grey-color);
+      border-radius: var(--big-radius);
+    }
   }
   &__img {
     width: 100%;
     height: 48rem;
     border-radius: var(--big-radius);
     object-fit: cover;
+
+    @include responsive("big-mobile") {
+      // width: 75%;
+      height: 24rem;
+    }
   }
   &__heading {
     font-weight: 700;
@@ -61,14 +76,13 @@
     }
 
     @include responsive("small-desktop") {
-        &--primary {
-            font-size: 3rem;
-        }
-        &--secondary {
-            font-size: 1.4rem;
-        }
+      &--primary {
+        font-size: 3rem;
+      }
+      &--secondary {
+        font-size: 1.4rem;
+      }
     }
-
   }
 
   &__year,

@@ -16,9 +16,9 @@
 
   @include responsive("big-mobile") {
     // Radiuses
-    --small-radius: 0.3rem;
-    --normal-radius: .6rem;
-    --big-radius: 1.2rem;
+    --small-radius: 0.6rem;
+    --normal-radius: 1rem;
+    --big-radius: 1.6rem;
   }
 }
 
