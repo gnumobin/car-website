@@ -16,6 +16,8 @@ const ProductsPage = () => {
   const [year, setYear] = useState({ start: "", end: "" });
   const [price, setPrice] = useState({ start: "", end: "" });
   const [kilometer, setKilometer] = useState({ start: "", end: "" });
+  const [brand, setBrand] = useState("");
+  const [armor, setArmor] = useState(null);
 
   const {
     data: cars,
@@ -23,7 +25,7 @@ const ProductsPage = () => {
     refetch,
   } = useQuery({
     queryKey: ["cars", pageNumber, submitManager],
-    queryFn: () => getCars(pageNumber, year, price, kilometer),
+    queryFn: () => getCars(pageNumber, year, price, kilometer, brand, armor),
   });
 
   return (
@@ -45,6 +47,10 @@ const ProductsPage = () => {
                 setKilometer={setKilometer}
                 submitManager={submitManager}
                 setSubmitManager={setSubmitManager}
+                brand={brand}
+                setBrand={setBrand}
+                armor={armor}
+                setArmor={setArmor}
               />
             </aside>
             <div className="products-container__products">
@@ -73,7 +79,7 @@ const ProductsPage = () => {
   );
 };
 
-const getCars = async (pageNumber, year, price, kilometer) => {
+const getCars = async (pageNumber, year, price, kilometer, brand, armor) => {
   const localYear = {
     start: year.start ? +year.start : 0,
     end: year.end ? +year.end : 5000,
@@ -89,13 +95,19 @@ const getCars = async (pageNumber, year, price, kilometer) => {
     end: kilometer.end ? +kilometer.end : 1000,
   };
 
-  console.log(localKilometer);
-
   const API_KEY = "https://api-cars.abolfazlrabiei.ir/api/cars?page=";
+  const API_RQ = `${API_KEY}${pageNumber}&min_year=${localYear.start}&max_year=${localYear.end}&min_price=${localPrice.start}&max_price=${localPrice.end}&min_speed=${localKilometer.start}&max_speed=${localKilometer.end}&make=${brand}`;
+  let response = "";
 
-  const response = await axios.get(
-    `${API_KEY}${pageNumber}&min_year=${localYear.start}&max_year=${localYear.end}&min_price=${localPrice.start}&max_price=${localPrice.end}`
-  );
+  console.log(Boolean(armor));
+
+  if (Boolean(armor)) {
+    response = await axios.get(API_RQ + `&is_bulletproof=${armor}`);
+    return response.data;
+  }
+
+  response = await axios.get(API_RQ);
+
   return response.data;
 };
 

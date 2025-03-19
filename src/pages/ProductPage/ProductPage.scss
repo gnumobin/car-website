@@ -12,6 +12,8 @@
   @include responsive("big-mobile") {
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding-top: 7rem;
+    padding-bottom: 2.5rem;
   }
 }
 

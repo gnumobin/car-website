@@ -13,6 +13,13 @@
   // Font Sizes
   --size-short-heading: 1.9rem;
   --size-item: 1.8rem;
+
+  @include responsive("big-mobile") {
+    // Radiuses
+    --small-radius: 0.6rem;
+    --normal-radius: 1rem;
+    --big-radius: 1.6rem;
+  }
 }
 
 *,

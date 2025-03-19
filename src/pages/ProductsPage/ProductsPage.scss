@@ -16,6 +16,8 @@
     @include responsive("big-mobile") {
       grid-template-columns: 2fr 1fr;
       gap: 1.5rem;
+      padding-top: 4rem;
+      gap: 2rem;
     }
   }
   &__heading {
@@ -28,7 +30,8 @@
       font-size: 2.8rem;
     }
     @include responsive("big-mobile") {
-      font-size: 1.6rem;
+      font-size: 2.2rem;
+      width: 50%;
     }
   }
 }

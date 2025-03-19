@@ -6,7 +6,11 @@
   border-top: 1px solid var(--grey-color);
 
   @include responsive("desktop") {
-    padding: 13rem 7.5em 3rem 7.5em;
+    padding: 13rem 7.5rem 3rem 7.5rem;
+  }
+
+  @include responsive("big-mobile") {
+    padding: 13rem 5rem 3rem 5rem;
   }
 
   &__nav {
@@ -17,8 +21,8 @@
 
     @include responsive("desktop") {
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      row-gap: 6rem;
+      // gap: 10rem;
+      row-gap: 8rem;
     }
 
     @include responsive("portrait-tablet") {
@@ -37,6 +41,9 @@
   &__social-box {
     gap: 2rem;
 
+    @include responsive("big-mobile") {
+      gap: 3rem;
+    }
   }
   &__social-text {
     font-size: 1.9rem;
@@ -46,6 +53,9 @@
   &__social-icons {
     display: flex;
     gap: 6.6rem;
+    scale: 1.2;
+    margin-top: .5rem;
+    justify-content: center;
   }
 
   // Contact Box

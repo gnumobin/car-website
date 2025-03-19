@@ -13,6 +13,10 @@ const SearchForm = ({
   submitManager,
   setSubmitManager,
   cars,
+  brand,
+  setBrand,
+  armor,
+  setArmor,
 }) => {
   const motorSelect = createNewArray(cars.items, "motor");
   const brandSelect = createNewArray(cars.items, "make");
@@ -30,7 +34,8 @@ const SearchForm = ({
           kilometer,
           submitManager,
           setSubmitManager,
-          toast
+          toast,
+          brand
         )
       }
     >
@@ -39,7 +44,12 @@ const SearchForm = ({
           <label htmlFor="marcas" className="search-form__label">
             MARCAS
           </label>
-          <select name="marcas" id="marcas" className="search-form__select">
+          <select
+            onChange={(e) => setBrand(e.target.value)}
+            name="marcas"
+            id="marcas"
+            className="search-form__select"
+          >
             <option value="" className="search-form__choose">
               Choose
             </option>
@@ -80,12 +90,17 @@ const SearchForm = ({
           <label htmlFor="blindado" className="search-form__label">
             BLINDADO
           </label>
-          <select name="blindao" id="blindado" className="search-form__select">
+          <select
+            onChange={(e) => setArmor(e.target.value)}
+            name="blindao"
+            id="blindado"
+            className="search-form__select"
+          >
             <option value="" className="search-form__choose">
               Choose
             </option>
-            <option value="all">All</option>
-            <option value="bullet-proof">Bullet Proof</option>
+            <option value="true">Bullet Proof</option>
+            <option value="false">Normal</option>
           </select>
           <ExpandMore
             className="search-form__icon"
@@ -229,24 +244,28 @@ const submitSearchHandle = (
   kilometer,
   submitManager,
   setSubmitManager,
-  toast
+  toast,
+  brand
 ) => {
   e.preventDefault();
 
-  if (
-    !(
-      year.start &&
-      year.end &&
-      price.start &&
-      price.end &&
-      kilometer.start &&
-      kilometer.end
-    )
-  ) {
-    toast.error('Please fill all fileds');
-  } else {
-    setSubmitManager(!submitManager);
-  }
+  setSubmitManager(!submitManager);
+
+  // if (
+  //   !(
+  //     year.start &&
+  //     year.end &&
+  //     price.start &&
+  //     price.end &&
+  //     kilometer.start &&
+  //     kilometer.end &&
+  //     brand
+  //   )
+  // ) {
+  //   toast.error('Please fill all fileds');
+  // } else {
+  //   setSubmitManager(!submitManager);
+  // }
 };
 
 const createNewArray = (cars, duty) => {

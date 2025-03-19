@@ -3,6 +3,7 @@
 .side-nav {
   font-weight: 700;
   justify-self: center;
+  padding-left: 5rem;
   
   &__product-name {
     color: var(--grey-color-shade-1);
@@ -15,7 +16,7 @@
     letter-spacing: 10%;
 
     @include responsive("big-mobile") {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
     }
   }
   &__list {
@@ -29,8 +30,8 @@
 
     @include responsive("big-mobile") {
       flex-direction: row;
-      font-size: 1.4rem;
-      gap: 7rem;
+      font-size: 1.8rem;
+      gap: 4rem;
     }
   }
   &__item {
