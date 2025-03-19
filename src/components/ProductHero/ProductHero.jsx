@@ -1,8 +1,7 @@
 import "./ProductHero.scss";
-import HeroImg from "../../assets/img/hero.png";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const ProductHero = ({ car: { name, max_speed, price, year, motor }}) => {
+const ProductHero = ({ car: { name, max_speed, price, year, motor, main_image }}) => {
   return (
     <section className="section-info-hero">
       <div className="info-hero">
@@ -20,7 +19,7 @@ const ProductHero = ({ car: { name, max_speed, price, year, motor }}) => {
         </div>
         <div className="info-hero__img-box">
           <img
-            src={HeroImg}
+            src={main_image}
             alt="a picture of some car"
             className="info-hero__img"
           />
@@ -29,7 +28,7 @@ const ProductHero = ({ car: { name, max_speed, price, year, motor }}) => {
       <p align="center">
         <a href="#pictureBox">
           <ExpandMoreIcon
-            sx={{ fontSize: "4.8rem", color: "rgba(0,0,0,.5)" }}
+            sx={{ fontSize: "4.2rem", color: "rgba(0,0,0,.5)" }}
           />
         </a>
       </p>

@@ -1,6 +1,7 @@
 import "./SearchForm.scss";
 import { useState } from "react";
 import { ExpandMore } from "@mui/icons-material";
+import { ToastContainer, toast } from "react-toastify";
 
 const SearchForm = ({
   year,
@@ -28,7 +29,8 @@ const SearchForm = ({
           price,
           kilometer,
           submitManager,
-          setSubmitManager
+          setSubmitManager,
+          toast
         )
       }
     >
@@ -215,6 +217,7 @@ const SearchForm = ({
         Limpar
       </button>
       <button className="search-form__submit">Filtrar</button>
+      <ToastContainer />
     </form>
   );
 };
@@ -225,10 +228,25 @@ const submitSearchHandle = (
   price,
   kilometer,
   submitManager,
-  setSubmitManager
+  setSubmitManager,
+  toast
 ) => {
   e.preventDefault();
-  setSubmitManager(!submitManager);
+
+  if (
+    !(
+      year.start &&
+      year.end &&
+      price.start &&
+      price.end &&
+      kilometer.start &&
+      kilometer.end
+    )
+  ) {
+    toast.error('Please fill all fileds');
+  } else {
+    setSubmitManager(!submitManager);
+  }
 };
 
 const createNewArray = (cars, duty) => {

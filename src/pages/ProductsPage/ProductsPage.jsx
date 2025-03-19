@@ -17,9 +17,13 @@ const ProductsPage = () => {
   const [price, setPrice] = useState({ start: "", end: "" });
   const [kilometer, setKilometer] = useState({ start: "", end: "" });
 
-  const { data: cars, isPending } = useQuery({
+  const {
+    data: cars,
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ["cars", pageNumber, submitManager],
-    queryFn: () => getCars(pageNumber),
+    queryFn: () => getCars(pageNumber, year, price, kilometer),
   });
 
   return (
@@ -44,11 +48,21 @@ const ProductsPage = () => {
               />
             </aside>
             <div className="products-container__products">
-              <Products
-                cars={cars}
-                setPageNumber={setPageNumber}
-                pageNumber={pageNumber}
-              />
+              {cars.total ? (
+                <Products
+                  cars={cars}
+                  setPageNumber={setPageNumber}
+                  pageNumber={pageNumber}
+                />
+              ) : (
+                <div className="refresh-box">
+                  <p className="refresh-box__text">
+                    Hey <b>mate</b>! <br /> There is nothing for <b>you</b>{" "}
+                    here. now <b>get out</b>!
+                  </p>
+                  {/* <button className="refresh-box__btn" onClick={refetch}>Refresh</button> */}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -59,11 +73,29 @@ const ProductsPage = () => {
   );
 };
 
-const getCars = async (pageNumber) => {
+const getCars = async (pageNumber, year, price, kilometer) => {
+  const localYear = {
+    start: year.start ? +year.start : 0,
+    end: year.end ? +year.end : 5000,
+  };
+
+  const localPrice = {
+    start: price.start ? +price.start : 1,
+    end: price.end ? +price.end : 99999999,
+  };
+
+  const localKilometer = {
+    start: kilometer.start ? +kilometer.start : 0,
+    end: kilometer.end ? +kilometer.end : 1000,
+  };
+
+  console.log(localKilometer);
+
+  const API_KEY = "https://api-cars.abolfazlrabiei.ir/api/cars?page=";
+
   const response = await axios.get(
-    "https://api-cars.abolfazlrabiei.ir/api/cars?page=" + pageNumber
+    `${API_KEY}${pageNumber}&min_year=${localYear.start}&max_year=${localYear.end}&min_price=${localPrice.start}&max_price=${localPrice.end}`
   );
-  console.log("run!");
   return response.data;
 };
 
