@@ -120,7 +120,7 @@ async def get_car(car_id: int, db: AsyncSession = Depends(get_db)):
 async def get_all_cars(
     page: int = Query(1, ge=1, description="Page number"),
     page_size: int = Query(10, ge=1, le=100, description="Items per page"),
-    sort_order: str = Query("asc", regex="^(asc|desc)$", description="Sort by ID (asc/desc)"),
+    sort_order: str = Query("desc", regex="^(asc|desc)$", description="Sort by ID (asc/desc)"),
     make: str = Query(None, description="Filter by car make (e.g., 'Toyota')"),
     motor: str = Query(None, description="Filter by car motor type (e.g., 'V6', 'V8', 'Electric Motor')"),
     model : str = Query(None, description="Filter by car model type "),
@@ -185,7 +185,7 @@ async def get_all_cars(
         stmt = stmt.filter(Car.is_bulletproof == is_bulletproof)
     
     # Apply sorting
-    stmt = stmt.order_by(Car.id.asc() if sort_order == "asc" else Car.id.desc())
+    stmt = stmt.order_by(Car.year.asc() if sort_order == "asc" else Car.year.desc())
 
     # Get total count of filtered cars
     total_query = select(func.count()).select_from(stmt.subquery().alias())
