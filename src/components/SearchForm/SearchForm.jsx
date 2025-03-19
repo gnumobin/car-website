@@ -17,6 +17,8 @@ const SearchForm = ({
   setBrand,
   armor,
   setArmor,
+  motor,
+  setMotor,
 }) => {
   const motorSelect = createNewArray(cars.items, "motor");
   const brandSelect = createNewArray(cars.items, "make");
@@ -111,7 +113,12 @@ const SearchForm = ({
           <label htmlFor="motor" className="search-form__label">
             MOTORIZAÇÃO
           </label>
-          <select name="motor" id="motor" className="search-form__select">
+          <select
+            onChange={(e) => setMotor(e.target.value)}
+            name="motor"
+            id="motor"
+            className="search-form__select"
+          >
             <option value="" className="search-form__choose">
               Choose
             </option>

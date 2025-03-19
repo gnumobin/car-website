@@ -10,6 +10,7 @@ import { useState } from "react";
 
 const ProductsPage = () => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const [submitManager, setSubmitManager] = useState(false);
   // Form inputs
@@ -17,6 +18,7 @@ const ProductsPage = () => {
   const [price, setPrice] = useState({ start: "", end: "" });
   const [kilometer, setKilometer] = useState({ start: "", end: "" });
   const [brand, setBrand] = useState("");
+  const [motor, setMotor] = useState("");
   const [armor, setArmor] = useState(null);
 
   const {
@@ -24,8 +26,18 @@ const ProductsPage = () => {
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ["cars", pageNumber, submitManager],
-    queryFn: () => getCars(pageNumber, year, price, kilometer, brand, armor),
+    queryKey: ["cars", pageNumber, submitManager, pageSize],
+    queryFn: () =>
+      getCars(
+        pageNumber,
+        year,
+        price,
+        kilometer,
+        brand,
+        armor,
+        motor,
+        pageSize
+      ),
   });
 
   return (
@@ -51,6 +63,8 @@ const ProductsPage = () => {
                 setBrand={setBrand}
                 armor={armor}
                 setArmor={setArmor}
+                motor={motor}
+                setMotor={setMotor}
               />
             </aside>
             <div className="products-container__products">
@@ -59,6 +73,8 @@ const ProductsPage = () => {
                   cars={cars}
                   setPageNumber={setPageNumber}
                   pageNumber={pageNumber}
+                  pageSize={pageSize}
+                  setPageSize={setPageSize}
                 />
               ) : (
                 <div className="refresh-box">
@@ -79,7 +95,16 @@ const ProductsPage = () => {
   );
 };
 
-const getCars = async (pageNumber, year, price, kilometer, brand, armor) => {
+const getCars = async (
+  pageNumber,
+  year,
+  price,
+  kilometer,
+  brand,
+  armor,
+  motor,
+  pageSize
+) => {
   const localYear = {
     start: year.start ? +year.start : 0,
     end: year.end ? +year.end : 5000,
@@ -96,7 +121,8 @@ const getCars = async (pageNumber, year, price, kilometer, brand, armor) => {
   };
 
   const API_KEY = "https://api-cars.abolfazlrabiei.ir/api/cars?page=";
-  const API_RQ = `${API_KEY}${pageNumber}&min_year=${localYear.start}&max_year=${localYear.end}&min_price=${localPrice.start}&max_price=${localPrice.end}&min_speed=${localKilometer.start}&max_speed=${localKilometer.end}&make=${brand}`;
+  const API_RQ = `${API_KEY}${pageNumber}&page_size=${pageSize}&min_year=${localYear.start}&max_year=${localYear.end}&min_price=${localPrice.start}&max_price=${localPrice.end}&min_speed=${localKilometer.start}&max_speed=${localKilometer.end}&make=${brand}&motor=${motor}`;
+
   let response = "";
 
   console.log(Boolean(armor));
