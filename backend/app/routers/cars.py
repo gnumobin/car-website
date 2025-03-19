@@ -142,6 +142,8 @@ async def get_all_cars(
         page_size (int): Items per page (default: 10, max: 100).
         sort_order (str): Sort cars by ID in 'asc' or 'desc' order.
         make (str): Filter cars by make (exact match).
+        motor (str) : Filter by car motor type (e.g., 'V6', 'V8', 'Electric Motor')
+        model (str) : Filter by car model type
         min_year (int): Filter cars with year ≥ [value].
         max_year (int): Filter cars with year ≤ [value].
         min_speed (int): Filter cars with speed ≥ [value].
