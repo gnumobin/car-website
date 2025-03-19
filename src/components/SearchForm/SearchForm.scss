@@ -61,18 +61,26 @@
     border-radius: 0.8rem;
     padding: 0.8rem 1.5rem;
     cursor: "pointer";
-    color: purple;
+    color: black;
   }
 
   &__select {
     background-color: transparent;
     cursor: pointer;
+    overflow: hidden;
+    font-size: 1.6rem;
+
+    option {
+      padding: .2rem;
+    }
   }
 
   &__icon {
     position: absolute;
     top: 100%;
     transform: translate(-150%, -150%);
+    z-index: 10;
+    background-color: white;
   }
 
   > button {

@@ -11,11 +11,11 @@ const SearchForm = ({
   setKilometer,
   submitManager,
   setSubmitManager,
-  cars
+  cars,
 }) => {
-
-  console.log(cars)
-
+  const motorSelect = createNewArray(cars.items, "motor");
+  const brandSelect = createNewArray(cars.items, "make");
+  const modelSelect = createNewArray(cars.items, "name");
 
   return (
     <form
@@ -38,7 +38,14 @@ const SearchForm = ({
             MARCAS
           </label>
           <select name="marcas" id="marcas" className="search-form__select">
-            <option>Item 1</option>
+            <option value="" className="search-form__choose">
+              Choose
+            </option>
+            {brandSelect.map((brand, i) => (
+              <option key={i} value={brand}>
+                {brand}
+              </option>
+            ))}
           </select>
           <ExpandMore
             className="search-form__icon"
@@ -50,7 +57,14 @@ const SearchForm = ({
             MODELOS
           </label>
           <select name="modelos" id="modelos" className="search-form__select">
-            <option>Item 1</option>
+            <option value="" className="search-form__choose">
+              Choose
+            </option>
+            {modelSelect.map((model, i) => (
+              <option key={i} value={model}>
+                {model}
+              </option>
+            ))}
           </select>
           <ExpandMore
             className="search-form__icon"
@@ -65,7 +79,11 @@ const SearchForm = ({
             BLINDADO
           </label>
           <select name="blindao" id="blindado" className="search-form__select">
-            <option>Item 1</option>
+            <option value="" className="search-form__choose">
+              Choose
+            </option>
+            <option value="all">All</option>
+            <option value="bullet-proof">Bullet Proof</option>
           </select>
           <ExpandMore
             className="search-form__icon"
@@ -77,7 +95,14 @@ const SearchForm = ({
             MOTORIZAÇÃO
           </label>
           <select name="motor" id="motor" className="search-form__select">
-            <option>Item 1</option>
+            <option value="" className="search-form__choose">
+              Choose
+            </option>
+            {motorSelect.map((motor, i) => (
+              <option key={i} value={motor}>
+                {motor}
+              </option>
+            ))}
           </select>
           <ExpandMore
             className="search-form__icon"
@@ -204,6 +229,10 @@ const submitSearchHandle = (
 ) => {
   e.preventDefault();
   setSubmitManager(!submitManager);
+};
+
+const createNewArray = (cars, duty) => {
+  return [...new Set(cars.map((car) => car[duty]))];
 };
 
 const chevronBottomIconStyle = {

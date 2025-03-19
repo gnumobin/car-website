@@ -13,8 +13,8 @@ const ProductsPage = () => {
 
   const [submitManager, setSubmitManager] = useState(false);
   // Form inputs
-  const [year, setYear] = useState({ start: "2020", end: "2025" });
-  const [price, setPrice] = useState({ start: "10", end: "200000" });
+  const [year, setYear] = useState({ start: "", end: "" });
+  const [price, setPrice] = useState({ start: "", end: "" });
   const [kilometer, setKilometer] = useState({ start: "", end: "" });
 
   const { data: cars, isPending } = useQuery({
