@@ -162,11 +162,11 @@ async def get_all_cars(
     
     # Apply filters
     if make:
-        stmt = stmt.filter(Car.make == make)
+        stmt = stmt.filter(Car.make.ilike(make))
     if motor:
-        stmt = stmt.filter(Car.motor == motor)
+        stmt = stmt.filter(Car.motor.ilike(motor))
     if model:
-        stmt = stmt.filter(func.cast(func.split_part(Car.name, " ", 2), String) == model)
+        stmt = stmt.filter(func.split_part(Car.name, " ", 2).ilike(model))
     if min_year:
         stmt = stmt.filter(Car.year >= min_year)
     if max_year:
