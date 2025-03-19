@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, UploadFile, Form,  File, HTTPException , Query
 from sqlalchemy.sql import func
-from sqlalchemy import Integer
+from sqlalchemy import Integer , String
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
@@ -122,6 +122,8 @@ async def get_all_cars(
     page_size: int = Query(10, ge=1, le=100, description="Items per page"),
     sort_order: str = Query("asc", regex="^(asc|desc)$", description="Sort by ID (asc/desc)"),
     make: str = Query(None, description="Filter by car make (e.g., 'Toyota')"),
+    motor: str = Query(None, description="Filter by car motor type (e.g., 'V6', 'V8', 'Electric Motor')"),
+    model : str = Query(None, description="Filter by car model type "),
     min_year: int = Query(None, description="Filter cars with year ≥ [value]"),
     max_year: int = Query(None, description="Filter cars with year ≤ [value]"),
     min_speed: int = Query(None, description="Filter cars with speed ≥ [value]"),
@@ -161,6 +163,10 @@ async def get_all_cars(
     # Apply filters
     if make:
         stmt = stmt.filter(Car.make == make)
+    if motor:
+        stmt.filter(Car.motor == motor)
+    if model:
+        stmt = stmt.filter(func.cast(func.split_part(Car.name, " ", 2), String) == model)
     if min_year:
         stmt = stmt.filter(Car.year >= min_year)
     if max_year:
