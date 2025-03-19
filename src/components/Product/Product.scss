@@ -14,6 +14,10 @@
     }
     &__img {
         width: 100%;
+        border-radius: var(--big-radius);
+        height: 15rem;
+        object-fit: cover;
+        object-position: 50% 65%;
     }
     &__title {
         font-size: 1.6rem;
@@ -44,19 +48,24 @@
         button {
             border: 1px solid var(--grey-color-shade-1);
             border-radius: 1rem;
-            padding: .5rem 1rem;
+            padding: .4rem .8rem;
             font-size: 1.2rem;
             font-weight: 700;
             background-color: transparent;
 
             &:not(:last-child) {
-                margin-right: 1rem;
+                margin-right: .8rem;
             }
         }
         .primary {
             background-color: #1D85FF;
             color: rgba(0,0,0,.7);
             border: 1px solid #1D85FF;
+        }
+        .tertiary {
+            background-color: #33FF00;
+            color: rgba(0,0,0,.6);
+            border: 1px solid #33FF00;
         }
         .secondary {
             color: var(--grey-color-shade-1);

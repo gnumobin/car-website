@@ -2,15 +2,19 @@ import "./Products.scss";
 import { useState } from "react";
 import Product from "../Product/Product";
 import Paginate from "../Paginate/Paginate";
-import { useEffect } from "react";
 
 const Products = (props) => {
   const { cars, setPageNumber,pageNumber } = props;
 
   const [itemOffset, setItemOffset] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-  // windowWidth >= 1000 ? 18 : 4
-  const itemsPerPage = cars.page_size;
+  window.addEventListener('resize', e => {
+    setWindowWidth(e.target.innerWidth)
+  })
+
+  
+  const itemsPerPage = windowWidth >= 1000 ? cars.page_size : 4;
   const endOffset = itemOffset + itemsPerPage;
   const currentItems = cars.items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(cars.total / itemsPerPage);

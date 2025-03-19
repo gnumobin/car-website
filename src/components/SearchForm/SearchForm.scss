@@ -1,97 +1,115 @@
 @import "../../abstracts/variables.scss";
 
-.select {
-    border-radius: var(--big-radius);
-    font-size: 1.7rem;
-    font-weight: 400;
-    .css-1u9des2-indicatorSeparator {
-        display: none;
-    }
-}
 .search-form {
-    border: 1px solid var(--grey-color-tint-1);
-    border-radius: var(--big-radius);
-    padding: 3rem 5rem 10rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  border: 1px solid var(--grey-color-tint-1);
+  border-radius: var(--big-radius);
+  padding: 3rem 5rem 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
-    @include responsive('big-mobile') {
-        padding: 3rem 2.5rem 10rem;
+  @include responsive("big-mobile") {
+    padding: 3rem 2.5rem 10rem;
+  }
+
+  &__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 7rem;
+
+    @include responsive("desktop") {
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
+  }
 
-    &__row {
-        position: relative;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        align-items: center;
-        gap: 7rem;
-        
-        @include responsive('desktop') {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
+  &__column:nth-last-of-type(odd) label {
+    text-align: right;
+    @include responsive("desktop") {
+      text-align: left;
     }
+  }
 
-    &__column:nth-last-of-type(odd) label {
-        text-align: right;
-        @include responsive('desktop') {
-           text-align: left;
-        }
+  &__intermediary {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--grey-color-shade-1);
+
+    @include responsive("desktop") {
+      display: none;
     }
+  }
 
-    &__intermediary {
-        position: absolute;
-        top: 55%;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 1.4rem;
-        font-weight: 600;
-        color: var(--grey-color-shade-1);
+  &__label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
 
-        @include responsive('desktop') {
-            display: none;
-        }
+  &__input,
+  &__select {
+    border: 1px solid var(--grey-color);
+    font-size: 1.8rem;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    cursor: "pointer";
+    color: black;
+  }
+
+  &__select {
+    background-color: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 1.6rem;
+
+    option {
+      padding: 0.2rem;
     }
+  }
 
-    &__label {
-        display: block;
-        margin-bottom: 1rem;
-        font-size: 1.4rem;
-        font-weight: 600;
-    }
+  &__icon {
+    position: absolute;
+    top: 100%;
+    transform: translate(-150%, -150%);
+    z-index: 10;
+    background-color: white;
+  }
 
-    &__input {
-        border: 1px solid var(--grey-color);
-        font-size: 1.8rem;
-        font-weight: 400;
-        width:100%;
-        border-radius: .8rem;
-        padding: .8rem 1.5rem;
-        cursor: "pointer";
-        color: purple;
+  > button {
+    border-radius: 0.8rem;
+    font-size: 1.8rem;
+    width: 100%;
+    display: block;
+    padding: 2rem 0;
+    font-weight: 600;
+  }
 
-    }
+  &__delete {
+    border: 1px solid var(--grey-color);
+    color: var(--grey-color);
+    background-color: transparent;
+    margin-top: 3rem;
+  }
 
-    > button {
-        border-radius: .8rem;
-        font-size: 1.8rem;
-        width: 100%;
-        display: block;
-        padding: 2rem 0;
-        font-weight: 600;
-    }
+  &__submit {
+    border: 1px solid transparent;
+    background-color: var(--primary-color);
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
 
-    &__delete {
-        border: 1px solid var(--grey-color);
-        color: var(--grey-color);
-        background-color: transparent;
-        margin-top: 3rem;
-    }
-    
-    &__submit {
-        border: 1px solid transparent;
-        background-color: var(--primary-color);
-        color: rgba(255, 255, 255, 0.3);
-    }
+.Toastify__toast--error {
+  font-size: 1.4rem;
+  padding: 1rem;
+  color: var(--primary-color);
+  font-weight: 700;
 }
