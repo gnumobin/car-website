@@ -1,15 +1,14 @@
 import "./Product.scss";
-import ProductImg from "../../assets/img/product.png";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link } from "react-router";
 
 const Product = ({ car }) => {
-  const { name, max_speed, price, year, is_bulletproof, is_electric, id, main_image } = car;
+  const { name, max_speed, price, year, is_bulletproof, is_electric, id, main_image, fuel } = car;
 
   return (
     <figure className="product">
       <img
-        src={ProductImg}
+        src={main_image}
         alt="a picture of product"
         className="product__img"
       />
@@ -31,8 +30,9 @@ const Product = ({ car }) => {
           </Link>
 
           <div className="product__btns">
-            {is_electric && <button className="secondary">HÍBRIDO</button>}
+            {fuel === 'Hybrid' && <button className="secondary">HÍBRIDO</button>}
             {is_bulletproof && <button className="primary">BLINDADO</button>}
+            {is_electric && <button className="tertiary">ELÉTRICO</button>}
           </div>
         </div>
       </figcaption>

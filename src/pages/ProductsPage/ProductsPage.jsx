@@ -7,24 +7,20 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../components/Loading/Loading";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import { useState } from "react";
-import { useEffect } from "react";
 
 const ProductsPage = () => {
-
   const [pageNumber, setPageNumber] = useState(1);
 
+  const [submitManager, setSubmitManager] = useState(false);
+  // Form inputs
+  const [year, setYear] = useState({ start: "2020", end: "2025" });
+  const [price, setPrice] = useState({ start: "10", end: "200000" });
+  const [kilometer, setKilometer] = useState({ start: "", end: "" });
+
   const { data: cars, isPending } = useQuery({
-    queryKey: ["cars", pageNumber],
+    queryKey: ["cars", pageNumber, submitManager],
     queryFn: () => getCars(pageNumber),
   });
-
-  const submitSearchHandle = (year, value, kilometer, e) => {
-    e.preventDefault();
-
-    setIsSubmit(true);
-
-  };
-
 
   return (
     <main className="section-products">
@@ -35,10 +31,24 @@ const ProductsPage = () => {
         ) : (
           <div className="products-container__grid">
             <aside>
-              <SearchForm cars={cars} submitSearchHandle={submitSearchHandle} />
+              <SearchForm
+                cars={cars}
+                year={year}
+                setYear={setYear}
+                price={price}
+                setPrice={setPrice}
+                kilometer={kilometer}
+                setKilometer={setKilometer}
+                submitManager={submitManager}
+                setSubmitManager={setSubmitManager}
+              />
             </aside>
             <div className="products-container__products">
-              <Products cars={cars} setPageNumber={setPageNumber} pageNumber={pageNumber}/>
+              <Products
+                cars={cars}
+                setPageNumber={setPageNumber}
+                pageNumber={pageNumber}
+              />
             </div>
           </div>
         )}
@@ -50,8 +60,10 @@ const ProductsPage = () => {
 };
 
 const getCars = async (pageNumber) => {
-  const response = await axios.get("https://api-cars.abolfazlrabiei.ir/api/cars?page="+pageNumber);
-  console.log(response.data)
+  const response = await axios.get(
+    "https://api-cars.abolfazlrabiei.ir/api/cars?page=" + pageNumber
+  );
+  console.log("run!");
   return response.data;
 };
 

@@ -1,86 +1,87 @@
-import Select from "react-select";
 import "./SearchForm.scss";
 import { useState } from "react";
+import { ExpandMore } from "@mui/icons-material";
 
-const SearchForm = ({ cars, submitSearchHandle }) => {
-  const options = [{ value: "mobin", label: "first name" }];
+const SearchForm = ({
+  year,
+  setYear,
+  price,
+  setPrice,
+  kilometer,
+  setKilometer,
+  submitManager,
+  setSubmitManager,
+  cars
+}) => {
 
-  // const motorsArr = [...new Set(cars.map(car => car.motor))]
+  console.log(cars)
 
-  const armoredOptions = [{ value: "bullet", label: "Bullet Proof" }];
-  const motorOptions = [{ value: "2.0L Turbo", label: "2.0L Turbo" }];
-
-  const selectChangeHandle = (selected) => {
-    console.log(selected);
-  };
-  const selectStyles = {
-    control: (styles) => ({ ...styles, ...mySelectStyles }),
-    option: (styles) => ({ ...styles, ...mySelectStyles }),
-  };
-
-  // Form Input states
-  const [armored, setArmored] = useState();
-  const [motor, setMotor] = useState();
-  const [year, setYear] = useState({ start: "2020", end: "2025" });
-  const [value, setValue] = useState({ start: "10", end: "200000" });
-  const [kilometer, setKilometer] = useState({ start: "", end: "" });
 
   return (
     <form
       action="#"
       className="search-form"
-      onSubmit={submitSearchHandle.bind(this, year, value, kilometer)}
+      onSubmit={(e) =>
+        submitSearchHandle(
+          e,
+          year,
+          price,
+          kilometer,
+          submitManager,
+          setSubmitManager
+        )
+      }
     >
       <div className="search-form__row">
         <div className="search-form__column">
-          <label htmlFor="" className="search-form__label">
+          <label htmlFor="marcas" className="search-form__label">
             MARCAS
           </label>
-          <Select
-            placeholder="Todas"
-            options={options}
-            onChange={selectChangeHandle}
-            className="select"
-            styles={selectStyles}
+          <select name="marcas" id="marcas" className="search-form__select">
+            <option>Item 1</option>
+          </select>
+          <ExpandMore
+            className="search-form__icon"
+            sx={chevronBottomIconStyle}
           />
         </div>
         <div className="search-form__column">
-          <label htmlFor="" className="search-form__label">
+          <label htmlFor="modelos" className="search-form__label">
             MODELOS
           </label>
-          <Select
-            placeholder="Todas"
-            options={options}
-            onChange={selectChangeHandle}
-            className="select"
-            styles={selectStyles}
+          <select name="modelos" id="modelos" className="search-form__select">
+            <option>Item 1</option>
+          </select>
+          <ExpandMore
+            className="search-form__icon"
+            sx={chevronBottomIconStyle}
           />
         </div>
       </div>
 
       <div className="search-form__row">
         <div className="search-form__column">
-          <label htmlFor="" className="search-form__label">
+          <label htmlFor="blindado" className="search-form__label">
             BLINDADO
           </label>
-          <Select
-            placeholder="Todas"
-            options={armoredOptions}
-            onChange={selectChangeHandle}
-            className="select"
-            styles={selectStyles}
+          <select name="blindao" id="blindado" className="search-form__select">
+            <option>Item 1</option>
+          </select>
+          <ExpandMore
+            className="search-form__icon"
+            sx={chevronBottomIconStyle}
           />
         </div>
         <div className="search-form__column">
-          <label htmlFor="" className="search-form__label">
+          <label htmlFor="motor" className="search-form__label">
             MOTORIZAÇÃO
           </label>
-          <Select
-            placeholder="Todas"
-            options={motorOptions}
-            onChange={selectChangeHandle}
-            className="select"
-            styles={selectStyles}
+          <select name="motor" id="motor" className="search-form__select">
+            <option>Item 1</option>
+          </select>
+          <ExpandMore
+            className="search-form__icon"
+            sx={chevronBottomIconStyle}
           />
         </div>
       </div>
@@ -128,8 +129,8 @@ const SearchForm = ({ cars, submitSearchHandle }) => {
             name="priceEnd"
             id="priceEnd"
             placeholder="100.000"
-            value={value.start}
-            onChange={(e) => setValue({ ...value, start: e.target.value })}
+            value={price.start}
+            onChange={(e) => setPrice({ ...price, start: e.target.value })}
           />
         </div>
         <p className="search-form__intermediary">ATÉ</p>
@@ -143,8 +144,8 @@ const SearchForm = ({ cars, submitSearchHandle }) => {
             name="priceStart"
             id="priceStart"
             placeholder="4.250.000"
-            value={value.end}
-            onChange={(e) => setValue({ ...value, end: e.target.value })}
+            value={price.end}
+            onChange={(e) => setPrice({ ...price, end: e.target.value })}
           />
         </div>
       </div>
@@ -193,10 +194,21 @@ const SearchForm = ({ cars, submitSearchHandle }) => {
   );
 };
 
-const mySelectStyles = {
-  width: "100%",
-  borderRadius: ".8rem",
-  cursor: "pointer",
+const submitSearchHandle = (
+  e,
+  year,
+  price,
+  kilometer,
+  submitManager,
+  setSubmitManager
+) => {
+  e.preventDefault();
+  setSubmitManager(!submitManager);
+};
+
+const chevronBottomIconStyle = {
+  fontSize: "1.8rem",
+  color: "rgba(0,0,0,.3)",
 };
 
 export default SearchForm;

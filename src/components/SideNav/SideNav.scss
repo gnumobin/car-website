@@ -30,6 +30,7 @@
     @include responsive("big-mobile") {
       flex-direction: row;
       font-size: 1.4rem;
+      gap: 7rem;
     }
   }
   &__item {
