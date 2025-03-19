@@ -9,7 +9,7 @@
   gap: 2rem;
 
   @include responsive("big-mobile") {
-    padding: 3rem 2.5rem 10rem;
+    padding: 3rem 2rem 0;
   }
 
   &__row {
@@ -24,6 +24,7 @@
       gap: 1rem;
     }
   }
+
 
   &__column:nth-last-of-type(odd) label {
     text-align: right;
@@ -40,10 +41,6 @@
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--grey-color-shade-1);
-
-    @include responsive("desktop") {
-      display: none;
-    }
   }
 
   &__label {
@@ -91,6 +88,10 @@
     display: block;
     padding: 2rem 0;
     font-weight: 600;
+
+    @include responsive("big-mobile") {
+      padding: 1rem;
+    }
   }
 
   &__delete {
@@ -112,4 +113,11 @@
   padding: 1rem;
   color: var(--primary-color);
   font-weight: 700;
+
+  @include responsive("big-mobile") {
+    width: 70%;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 1rem;
+  }
 }

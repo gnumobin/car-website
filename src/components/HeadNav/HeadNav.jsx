@@ -15,7 +15,7 @@ const HeadNav = (_) => {
       </div>
       <input type="checkbox" id="toggleMenu" />
       <label htmlFor="toggleMenu" className="head-nav__toggle">
-        <MenuIcon sx={{ fontSize: "4rem" }} />
+        <MenuIcon sx={{ fontSize: "3.6rem" }} />
       </label>
       <ul className="head-nav__list">
         <li className="head-nav__item">

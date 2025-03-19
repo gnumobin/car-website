@@ -14,7 +14,7 @@ const Products = (props) => {
   })
 
   
-  const itemsPerPage = windowWidth >= 1000 ? cars.page_size : 4;
+  const itemsPerPage = windowWidth >= 1000 ? cars.page_size : 3;
   const endOffset = itemOffset + itemsPerPage;
   const currentItems = cars.items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(cars.total / itemsPerPage);

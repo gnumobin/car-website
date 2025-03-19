@@ -1,80 +1,92 @@
 @import "../../abstracts/variables.scss";
 
 .section-cta {
-    background-color: #F7F7F7;
-    padding: 10rem 18rem 13rem 18rem;
+  background-color: #f7f7f7;
+  padding: 10rem 18rem 13rem 18rem;
 
-    @include responsive('small-desktop') {
-        padding: 10rem 13rem 13rem 13rem;
+  @include responsive("small-desktop") {
+    padding: 10rem 13rem 13rem 13rem;
+  }
+
+  @include responsive("landscape-tablet") {
+    padding: 10rem 7.5rem 13rem 7.5rem;
+  }
+
+  @include responsive("big-mobile") {
+    padding: 10rem 5rem 13rem 5rem;
+  }
+
+  &__head-box {
+    margin-bottom: 5rem;
+    
+    > p {
+      font-size: 1.6rem;
+      margin-top: 1rem;
+      @include responsive("big-mobile") {
+        margin-top: 1.5rem;
+      }
     }
-
-    @include responsive('landscape-tablet') {
-        padding: 10rem 7.5rem 13rem 7.5rem;
-    }
-
-    @include responsive('big-mobile') {
-        padding: 10rem 5rem 13rem 5rem;
-    }
-
-    &__head-box {
-        margin-bottom: 5rem;
-
-        > p {
-            font-size: 1.6rem;
-            margin-top: 1rem;
-        }
-    }
+  }
 }
 
 .cta-form {
-    font-size: 1.8rem;
-    padding: 5rem;
+  font-size: 1.8rem;
+  padding: 5rem;
+  border: 1px solid var(--grey-color-shade-1);
+  border-radius: var(--normal-radius);
+
+  @include responsive("big-mobile") {
+    padding: 3rem;
+  }
+
+  &__input-box {
+    display: flex;
+    gap: 4rem;
+    margin-bottom: 4rem;
+
+    @include responsive("landscape-tablet") {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include responsive("big-mobile") {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+  &__input {
     border: 1px solid var(--grey-color-shade-1);
-    border-radius: var(--normal-radius);
-   
-    &__input-box {
-        display: flex;
-        gap: 4rem;
-        margin-bottom: 4rem;
+    border-radius: var(--small-radius);
+    padding: 1rem 1.5rem;
+    font-size: inherit;
+    width: 25%;
 
-        @include responsive('landscape-tablet') {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-        }
+    @include responsive("landscape-tablet") {
+      width: 100%;
+    }
+  }
+  &__submit {
+    background-color: var(--primary-color);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: 0.2s;
 
-        @include responsive("big-mobile") {
-            grid-template-columns: 1fr;
-        }
+    &:hover {
+      color: white;
     }
-    &__input {
-        border: 1px solid var(--grey-color-shade-1);
-        border-radius: var(--small-radius);
-        padding: 1rem 1.5rem;
-        font-size: inherit;
-        width: 25%;
+  }
+  &__label {
+    display: flex;
+    gap: 0.5rem;
+    align-items: start;
+  }
+  &__checkbox-text {
+    font-size: 1.4rem;
+    font-weight: 300;
+    margin-top: -0.3rem;
 
-        @include responsive('landscape-tablet') {
-            width: 100%;
-        }
+    @include responsive("big-mobile") {
+      margin-left: 1rem;
     }
-    &__submit {
-        background-color: var(--primary-color);
-        color: rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        transition: .2s;
-
-        &:hover {
-            color: white;
-        }
-    }
-    &__label {
-        display: flex;
-        gap: .5rem;
-        align-items: start;
-    }
-    &__checkbox-text {
-        font-size: 1.4rem;
-        font-weight: 300;
-        margin-top: -.3rem;
-    }
+  }
 }
