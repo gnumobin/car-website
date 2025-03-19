@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, UploadFile, Form,  File, HTTPException , Query
 from sqlalchemy.sql import func
+from sqlalchemy import Integer
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
@@ -113,6 +114,8 @@ async def get_car(car_id: int, db: AsyncSession = Depends(get_db)):
     return car
 
 
+
+
 @router.get("/cars", response_model=PaginatedCarResponse)
 async def get_all_cars(
     page: int = Query(1, ge=1, description="Page number"),
@@ -121,6 +124,8 @@ async def get_all_cars(
     make: str = Query(None, description="Filter by car make (e.g., 'Toyota')"),
     min_year: int = Query(None, description="Filter cars with year ≥ [value]"),
     max_year: int = Query(None, description="Filter cars with year ≤ [value]"),
+    min_speed: int = Query(None, description="Filter cars with speed ≥ [value]"),
+    max_speed: int = Query(None, description="Filter cars with speed ≤ [value]"),
     min_price: float = Query(None, description="Filter cars with price ≥ [value]"),
     max_price: float = Query(None, description="Filter cars with price ≤ [value]"),
     is_electric: bool = Query(None, description="Filter cars that are electric (true/false)"),
@@ -137,6 +142,8 @@ async def get_all_cars(
         make (str): Filter cars by make (exact match).
         min_year (int): Filter cars with year ≥ [value].
         max_year (int): Filter cars with year ≤ [value].
+        min_speed (int): Filter cars with speed ≥ [value].
+        max_speed (int): Filter cars with speed ≤ [value].
         min_price (float): Filter cars with price ≥ [value].
         max_price (float): Filter cars with price ≤ [value].
         is_electric (bool): Filter cars that are electric (true/false).
@@ -158,6 +165,10 @@ async def get_all_cars(
         stmt = stmt.filter(Car.year >= min_year)
     if max_year:
         stmt = stmt.filter(Car.year <= max_year)
+    if min_speed:
+        stmt = stmt.filter(func.cast(func.split_part(Car.max_speed, " ", 1), Integer) >= min_speed)
+    if max_speed:
+        stmt = stmt.filter(func.cast(func.split_part(Car.max_speed, " ", 1), Integer) <= max_speed)
     if min_price:
         stmt = stmt.filter(Car.price >= min_price)
     if max_price:
