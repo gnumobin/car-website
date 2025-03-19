@@ -164,7 +164,7 @@ async def get_all_cars(
     if make:
         stmt = stmt.filter(Car.make == make)
     if motor:
-        stmt.filter(Car.motor == motor)
+        stmt = stmt.filter(Car.motor == motor)
     if model:
         stmt = stmt.filter(func.cast(func.split_part(Car.name, " ", 2), String) == model)
     if min_year:
