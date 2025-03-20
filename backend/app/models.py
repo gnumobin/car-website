@@ -27,6 +27,7 @@ class Car(Base):
         main_image (str): URL of the main image of the car.
         is_bulletproof (bool): Indicates if the car is bulletproof (default: False).
         is_electric (bool): Indicates if the car is electric (default: False).
+        make (str) : brand car. (e.g. , toyota , bmw).
         images (relationship): Relationship to associated `CarImage` objects.
     """
     __tablename__ = "cars"
