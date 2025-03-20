@@ -33,6 +33,7 @@ class CarBase(BaseModel):
         main_image (Optional[str]): URL of the main image of the car (optional).
         is_electric (Optional[bool]): Indicates if the car is electric (default: False).
         is_bulletproof (Optional[bool]): Indicates if the car is bulletproof (default: False).
+        make (str) : brand car. (e.g. , toyota , bmw).
         images (List[CarImageResponse]): List of associated images (optional, default: empty list).
     """
     name: str
