@@ -6,6 +6,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from typing import List
 from app.config import BUCKET_NAME, ACCESS_KEY, SECRET_KEY, ENDPOINT , CLOUD_CUSTOM_PREFIX
+import logging
 from app.database import get_db
 from app.models import Car, CarImage
 from app.schemas import CarCreate, CarUpdate, CarResponse , PaginatedCarResponse
@@ -15,6 +16,8 @@ import boto3
 # Create an API router
 router = APIRouter()
 
+# logging
+logger = logging.getLogger("car-website")
 # Initialize S3 client for AWS S3 or compatible services
 s3_client = boto3.client(
     "s3",
@@ -41,10 +44,12 @@ async def create_car(
     Returns:
         CarResponse: The newly created car with its associated images and main image URL.
     """
+    logger.info("Creating a new car entry")
     try:
         # Parse the JSON string into the CarCreate model
         car = CarCreate.parse_raw(car_data)  # Deserialize and validate
     except Exception as e:
+        logger.error(f"Invalid car data: {str(e)}")
         raise HTTPException(status_code=422, detail=f"Invalid car data: {str(e)}")
 
     # Generate a unique key for the main image
@@ -64,6 +69,7 @@ async def create_car(
         )
         main_image_url = f"{CLOUD_CUSTOM_PREFIX}/{image_key}"
     except Exception as e:
+        logger.error(f"Failed to upload main image: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to upload main image: {str(e)}")
 
     # Create the car object including the main image URL
@@ -87,6 +93,7 @@ async def create_car(
     result = await db.execute(stmt)
     car_with_images = result.scalar_one_or_none()
 
+    logger.info(f"Car created successfully: ID {new_car.id}")
     return car_with_images
 
 @router.get("/cars/{car_id}", response_model=CarResponse)
@@ -104,11 +111,13 @@ async def get_car(car_id: int, db: AsyncSession = Depends(get_db)):
     Raises:
         HTTPException: If the car is not found.
     """
+    logger.info(f"Fetching car with ID {car_id}")
     stmt = select(Car).options(selectinload(Car.images)).where(Car.id == car_id)
     result = await db.execute(stmt)
     car = result.scalar_one_or_none()
 
     if not car:
+        logger.warning(f"Car with ID {car_id} not found")
         raise HTTPException(status_code=404, detail="Car not found")
 
     return car
@@ -165,34 +174,47 @@ async def get_all_cars(
     # Apply filters
     if make:
         stmt = stmt.filter(Car.make.ilike(make))
+        logger.info(f"Applied filter: make={make}")
     if motor:
         stmt = stmt.filter(Car.motor.ilike(motor))
+        logger.info(f"Applied filter: motor={motor}")
     if model:
         stmt = stmt.filter(func.substring(Car.name, r"\s(.*)").ilike(model))
+        logger.info(f"Apied filter: model={model}")
     if min_year:
         stmt = stmt.filter(Car.year >= min_year)
+        logger.info(f"Applied filter: min_year={min_year}")
     if max_year:
         stmt = stmt.filter(Car.year <= max_year)
+        logger.info(f"Applied filter: max_year={max_year}")
     if min_speed:
         stmt = stmt.filter(func.cast(func.split_part(Car.max_speed, " ", 1), Integer) >= min_speed)
+        logger.info(f"Applied filter: min_speed={min_speed}")
     if max_speed:
         stmt = stmt.filter(func.cast(func.split_part(Car.max_speed, " ", 1), Integer) <= max_speed)
+        logger.info(f"Applied filter: max_speed={max_speed}")
     if min_price:
         stmt = stmt.filter(Car.price >= min_price)
+        logger.info(f"Applied filter: min_price={min_price}")
     if max_price:
         stmt = stmt.filter(Car.price <= max_price)
+        logger.info(f"Applied filter: max_price={max_price}")
     if is_electric is not None:  # Handle both True and False cases
         stmt = stmt.filter(Car.is_electric == is_electric)
+        logger.info(f"Applied filter: is_electric={is_electric}")
     if is_bulletproof is not None:  # Handle both True and False cases
         stmt = stmt.filter(Car.is_bulletproof == is_bulletproof)
+        logger.info(f"Applied filter: is_bulletproof={is_bulletproof}")
     
     # Apply sorting
     stmt = stmt.order_by(Car.year.asc() if sort_order == "asc" else Car.year.desc())
+    logger.info(f"Sorting by ID in {sort_order} order.")
 
     # Get total count of filtered cars
     total_query = select(func.count()).select_from(stmt.subquery().alias())
     total_result = await db.execute(total_query)
     total = total_result.scalar()
+    logger.info(f"Total filtered cars: {total}")
 
     # Apply pagination
     stmt = stmt.offset(offset).limit(page_size)
@@ -223,11 +245,13 @@ async def update_car(car_id: int, car_data: CarUpdate, db: AsyncSession = Depend
     Raises:
         HTTPException: If the car is not found.
     """
+    logger.info(f"Updating car with ID {car_id}")
     stmt = select(Car).where(Car.id == car_id)
     result = await db.execute(stmt)
     car = result.scalar_one_or_none()
 
     if not car:
+        logger.warning(f"Car with ID {car_id} not found")
         raise HTTPException(status_code=404, detail="Car not found")
 
     # Update the car's fields
@@ -241,7 +265,7 @@ async def update_car(car_id: int, car_data: CarUpdate, db: AsyncSession = Depend
     stmt = select(Car).options(selectinload(Car.images)).where(Car.id == car_id)
     result = await db.execute(stmt)
     car_with_images = result.scalar_one_or_none()
-
+    logger.info(f"Car with ID {car_id} updated successfully")
     return car_with_images
 
 
@@ -260,6 +284,7 @@ async def delete_car(car_id: int, db: AsyncSession = Depends(get_db)):
     Raises:
         HTTPException: If the car is not found or an error occurs while deleting files from S3.
     """
+    logger.info(f"Deleting car with ID {car_id}")
     stmt = select(Car).where(Car.id == car_id)
     result = await db.execute(stmt)
     car = result.scalar_one_or_none()
@@ -280,12 +305,15 @@ async def delete_car(car_id: int, db: AsyncSession = Depends(get_db)):
                 Bucket=BUCKET_NAME,
                 Delete={"Objects": objects_to_delete}
             )
-
+        logger.info(f"S3 files for car ID {car_id} deleted successfully")
     except Exception as e:
+        logger.error(f"Failed to delete S3 folder: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to delete S3 folder: {str(e)}")
 
     # Delete the car from the database
     await db.delete(car)
     await db.commit()
+
+    logger.info(f"Car with ID {car_id} deleted successfully")
 
     return {"message": f"Car with ID {car_id} and its associated files have been deleted successfully."}

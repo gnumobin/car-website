@@ -4,6 +4,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from typing import List
 from app.database import get_db
+import logging
 from app.config import BUCKET_NAME, ENDPOINT, ACCESS_KEY, SECRET_KEY
 from app.models import Car, CarImage
 from app.schemas import CarImageResponse, CarImageCreate
@@ -20,7 +21,8 @@ s3_client = boto3.client(
 )
 
 router = APIRouter()
-
+#logging
+logger = logging.getLogger("car-website")
 
 # ========================= UPLOAD IMAGE TO GALLERY ========================
 
@@ -45,10 +47,12 @@ async def add_image_to_gallery(
         HTTPException: If the car is not found or an error occurs during the upload process.
     """
     # Check if the car exists
+    logger.info(f"Adding image to gallery for car ID : {car_id}")
     stmt = select(Car).where(Car.id == car_id)
     result = await db.execute(stmt)
     car = result.scalar_one_or_none()
     if not car:
+        logger.warning(f"Car with ID {car_id} not found")
         raise HTTPException(status_code=404, detail="Car not found")
 
     # Generate a unique key for the image
@@ -76,7 +80,7 @@ async def add_image_to_gallery(
             image_key,
             ExtraArgs={"ContentType": content_type, "ACL": "public-read"},
         )
-
+        logger.info(f"upload for car ID : {car_id} successfully.")
         # Generate the public URL for the image
         image_url = f"{cloud_address_prefix}/{image_key}"
 
@@ -85,10 +89,11 @@ async def add_image_to_gallery(
         db.add(new_image)
         await db.commit()
         await db.refresh(new_image)
-
+        logger.info(f"save image link for car ID : {car_id} successfully.")
         return new_image
 
     except Exception as e:
+        logger.error(f"Failed to upload image to gallery: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to upload image: {str(e)}")
 
 
@@ -109,11 +114,13 @@ async def get_car_gallery(car_id: int, db: AsyncSession = Depends(get_db)):
         HTTPException: If the car is not found.
     """
     # Check if the car exists and load its associated images
+    logger.info(f"getting gallery car with ID {car_id}")
     stmt = select(Car).options(selectinload(Car.images)).where(Car.id == car_id)
     result = await db.execute(stmt)
     car = result.scalar_one_or_none()
     if not car:
+        logger.warning(f"Car with ID {car_id} not found")
         raise HTTPException(status_code=404, detail="Car not found")
-
+    logger.info(f"get gallery for car ID : {car_id} successfully.")
     # Return the list of associated images
     return car.images

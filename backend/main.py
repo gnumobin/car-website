@@ -6,6 +6,7 @@ from app.routers import cars, gallery_cars
 import uvicorn
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
+from logging_config import logger
 
 # Middleware configuration for CORS
 middleware = [
